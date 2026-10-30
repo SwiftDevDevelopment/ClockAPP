@@ -1,0 +1,2 @@
+# Benchmark tooling is not part of the application language breakdown.
+benchmarks/*.py linguist-detectable=false
