@@ -50,7 +50,8 @@ The application is unsigned; Windows may show an unknown-publisher notice
 AUTO UPDATES:
 While running, the clock checks SwiftDevDevelopment/ClockAPP on GitHub at most once every 48 hours. The schedule is remembered across restarts, and failed/offline attempts also wait 48 hours. No checks run while the app is closed.
 
-Newer versions download automatically over HTTPS, with checksum verification, to %LOCALAPPDATA%\SimpleClockOverlay\Updates. In Settings, use the download-folder button when an update is ready. Exit the clock, replace your old EXE with the downloaded SimpleClockOverlay.exe, then launch it. Updates are NOT installed automatically. Your clock settings are retained.
+Newer versions download automatically over HTTPS, with checksum verification, to %LOCALAPPDATA%\SimpleClockOverlay\Updates. When an update is ready, open Settings and click Update and restart. The clock saves your settings, closes, installs the downloaded version and restarts automatically. No file copying is needed. Keep the application in a folder you can write to, such as Downloads or a folder in your user profile. If installation fails, the old application is kept or restored, with a message explaining the problem.
 
 Auto updates are enabled by default. Disable them in Settings and click Save to stop future checks. GitHub receives normal connection information, including your IP address. Clock settings are not uploaded. The clock continues to work offline.
+
 
