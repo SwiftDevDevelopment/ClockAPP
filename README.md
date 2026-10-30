@@ -1,19 +1,19 @@
-# Simple Clock Overlay — Quick Guide
-Windows 10/11, 64-bit
+# Simple Clock Overlay for Windows
+A simple floating digital clock for Windows 10 and Windows 11 (64-bit). Keep the time visible above other apps with an always-on-top desktop overlay, customizable text and background colors, transparency, and timezone support.
 
-[Download the clock](https://github.com/SwiftDevDevelopment/ClockAPP/raw/refs/heads/main/SimpleClockOverlay-win-x64.zip)
+[Download the latest Windows release](https://github.com/SwiftDevDevelopment/ClockAPP/releases/latest) — extract the ZIP and run the EXE. No installation required.
 
-GET STARTED:
+## Get Started
 1. Extract the ZIP into a folder of your choice.
 2. Double-click SimpleClockOverlay.exe.
 That's it. No installation or separate .NET download is needed.
 
-MOVE THE CLOCK:
+## Move The Clock
 
 Hold the left mouse button on the clock and drag it anywhere.
 Your position is remembered the next time you launch it.
 
-SETTINGS:
+## Settings
 Right-click the clock and choose Settings.
 - Timezone: choose where the clock gets its local time.
   Default: Copenhagen. Daylight saving is handled automatically.
@@ -28,26 +28,26 @@ Right-click the clock and choose Settings.
 Click Save to apply changes, or Cancel to discard them.
 At 0% background opacity, click directly on the clock text to interact.
 
-EXIT:
+## Exit
 Right-click the clock and choose Exit.
 
-UPDATE:
+## Update
 Exit the old clock before launching a new version.
 Your saved settings are retained.
 
-SETTINGS LOCATION:
+## Settings Location
 %LOCALAPPDATA%\SimpleClockOverlay\settings.json
 
-UNINSTALL:
+## Uninstall
 Exit the clock and delete its application folder.
 Optionally delete the SimpleClockOverlay folder in Local AppData.
 
-NOTES:
+## Notes
 Some exclusive fullscreen games may cover desktop overlays.
 The application is unsigned; Windows may show an unknown-publisher notice
 
 
-AUTO UPDATES:
+## Auto Updates
 While running, the clock checks SwiftDevDevelopment/ClockAPP on GitHub at most once every 48 hours. The schedule is remembered across restarts, and failed/offline attempts also wait 48 hours. No checks run while the app is closed.
 
 Newer versions download automatically over HTTPS, with checksum verification, to %LOCALAPPDATA%\SimpleClockOverlay\Updates. When an update is ready, open Settings and click Update and restart. The clock saves your settings, closes, installs the downloaded version and restarts automatically. No file copying is needed. Keep the application in a folder you can write to, such as Downloads or a folder in your user profile. If installation fails, the old application is kept or restored, with a message explaining the problem.
@@ -57,3 +57,4 @@ Auto updates are enabled by default. Disable them in Settings and click Save to 
 
 
 [GitHub Privacy Statement — data collection and handling](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)
+
