@@ -29,7 +29,7 @@ internal static class Checks
             File.WriteAllText(settingsPath, "bad"); Check(Preferences.Load(settingsPath).TimeZoneId == "Europe/Copenhagen", "Corrupt settings recover");
             var now = DateTimeOffset.UtcNow;
             Check(Updates.Due(null, now) && !Updates.Due(now.AddHours(-47), now) && Updates.Due(now.AddHours(-48), now), "48-hour scheduling boundary");
-            Check(Updates.Newer("2.0.0-preview.2", Program.Version) && !Updates.Newer(Program.Version, Program.Version) && Updates.Newer("2.0.0", Program.Version), "Preview version ordering");
+            Check(Updates.Newer("2.0.0-preview.99", Program.Version) && !Updates.Newer(Program.Version, Program.Version) && Updates.Newer("2.0.0", Program.Version), "Preview version ordering");
             var source = Path.Combine(root, "new"); var target = Path.Combine(root, "old");
             File.WriteAllText(source, "new version"); File.WriteAllText(target, "old version");
             var hash = Installer.Hash(source); Installer.Replace(source, target, hash);
@@ -89,3 +89,4 @@ internal static class Checks
         }
     }
 }
+

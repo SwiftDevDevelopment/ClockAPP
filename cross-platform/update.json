@@ -1,13 +1,13 @@
 {
-  "Version": "2.0.0-preview.1",
+  "Version": "2.0.0-preview.2",
   "Files": {
     "win-x64": {
-      "Url": "https://github.com/SwiftDevDevelopment/ClockAPP/releases/download/v2.0.0-preview.1/ClockOverlay-win-x64.zip",
-      "Sha256": "ced57fea17c314c3363a128f56a7083e1042384c534461c6d1c31afce7596a8b"
+      "Url": "https://github.com/SwiftDevDevelopment/ClockAPP/releases/download/v2.0.0-preview.2/ClockOverlay-win-x64.zip",
+      "Sha256": "d4042d6df30c3d2edf816e8c9eb846d0230696aa6b8cfdf06dd2893ecba5c658"
     },
     "linux-x64": {
-      "Url": "https://github.com/SwiftDevDevelopment/ClockAPP/releases/download/v2.0.0-preview.1/ClockOverlay-linux-x64.zip",
-      "Sha256": "ff59654f3d905c94bcda2b506ffabfa61fb1502b242216cbd4896a2131e65ef7"
+      "Url": "https://github.com/SwiftDevDevelopment/ClockAPP/releases/download/v2.0.0-preview.2/ClockOverlay-linux-x64.zip",
+      "Sha256": "6a1a8f5794d799f6ef7c9b71185c5e8e128285c80bf0c3acdced02e9912d3302"
     }
   }
 }
