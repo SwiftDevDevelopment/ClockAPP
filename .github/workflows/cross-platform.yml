@@ -44,11 +44,26 @@ jobs:
         run: |
           xvfb-run -a ./publish/ClockOverlay --ui-check "$PWD/ui-results.txt"
           grep '^PASS:' ui-results.txt
+      - name: Check published binary on Unix hosts
+        if: github.event_name == 'workflow_dispatch' && runner.os != 'Windows'
+        shell: bash
+        run: |
+          curl --fail --location "https://github.com/SwiftDevDevelopment/ClockAPP/releases/download/v2.0.0-preview.1/ClockOverlay-${{ matrix.rid }}.zip" --output published.zip
+          unzip -q published.zip -d published
+          if [ "${{ runner.os }}" = "macOS" ]; then
+            binary="$PWD/published/Clock Overlay.app/Contents/MacOS/ClockOverlay"
+          else
+            binary="$PWD/published/ClockOverlay"
+          fi
+          "$binary" --self-test "$PWD/published-results.txt"
+          cat published-results.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: checks-${{ matrix.rid }}
           path: |
             test-results.txt
+            published-results.txt
             ui-results.txt*
+
 

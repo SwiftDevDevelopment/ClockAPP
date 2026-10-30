@@ -41,12 +41,13 @@ The preview uses `cross-platform/update.json`, independently of the Windows v1 u
 
 No Electron/web runtime, background service, updater daemon, telemetry SDK, MVVM framework or continuous animation loop. The clock uses one 1-second timer and changes its text only when the displayed time changes. A separate 1-minute timer checks the saved 48-hour deadline locally. Windows/X11 use software rendering to avoid a GPU context for a tiny clock. Resources still include .NET, Avalonia and its text/graphics stack; this is not a near-zero-memory application. The original Windows Forms app is still the smaller-scope Windows option.
 
-See PERFORMANCE.md for the measured Windows sample. Linux/macOS memory and CPU have not been measured. Compressed single-file runtime/native libraries can extract into the user's temporary .net directory on first launch; this is separate from updater storage.
+See PERFORMANCE.md for the measured Windows sample. Linux WSLg measured about 122 MiB resident memory and 1.5% of one CPU core in a short sample; macOS has not been benchmarked. Compressed single-file runtime/native libraries can extract into the user's temporary .net directory on first launch; this is separate from updater storage.
 
 ## Validation
 
 Windows passed 19 logic/update/packaging checks. Linux passed 20 native checks (including executable permissions) in the existing Ubuntu WSL environment. Clock and Settings were rendered and visually inspected on both Windows and Ubuntu WSLg. The minimal WSL environment needed libICE/libSM; isolated copies were used for testing without installing system packages. This is not equivalent to validation across Linux desktops. macOS binaries were cross-compiled successfully, but compilation does not prove native desktop behavior. Native Linux and Mac tests remain required, particularly dragging, transparent backgrounds, topmost, mixed-DPI monitors, focus, macOS opening restrictions and Linux update/restart. The installer helper was also exercised on Windows and Linux with isolated copied executables: wait for parent exit, replace, retain backup, and restart into the self-test runner. Interactive Update-button behavior and failures across Linux distributions still need field testing.
 
-The native CI workflow can be run manually and checks contributions to this edition. See CONTRIBUTING.md. No native CI success is claimed until the workflow has actually completed.
+The native CI workflow can be run manually and checks contributions to this edition. See CONTRIBUTING.md. Native Windows/Linux/Intel Mac/Apple Silicon Mac build and logic CI passed: https://github.com/SwiftDevDevelopment/ClockAPP/actions/runs/41050912854 . Linux also passed the Xvfb settings render. These do not establish macOS GUI, signing, Gatekeeper or Spaces behavior.
+
 
 
