@@ -7,6 +7,7 @@ GET STARTED
 That's it. No installation or separate .NET download is needed.
 
 MOVE THE CLOCK
+
 Hold the left mouse button on the clock and drag it anywhere.
 Your position is remembered the next time you launch it.
 
