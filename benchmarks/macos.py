@@ -117,7 +117,7 @@ def main():
               'os_version': subprocess.check_output(['sw_vers', '-productVersion'], text=True).strip(),
               'cpu_model': subprocess.check_output(['sysctl', '-n', 'machdep.cpu.brand_string'], text=True).strip(),
               'logical_cpus': int(subprocess.check_output(['sysctl', '-n', 'hw.logicalcpu'], text=True)),
-              'release': '2.0.0-preview.2', 'warmup_seconds': 10,
+              'release': '2.0.0-preview.2', 'packaging_revision': 'mac.1', 'warmup_seconds': 10,
               'method': 'Published binary; GUI window verified through CoreGraphics; ps RSS and process CPU time. 3 x 30-second samples per mode. Hosted-runner results, not physical-Mac guarantees.',
               'samples': []}
     # Alternate modes so neither consistently receives the coldest or warmest host.
@@ -150,3 +150,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

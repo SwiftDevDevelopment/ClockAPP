@@ -22,7 +22,7 @@ jobs:
       - name: Download existing preview
         shell: bash
         run: |
-          curl --fail --location "https://github.com/SwiftDevDevelopment/ClockAPP/releases/download/v2.0.0-preview.2/${{ matrix.asset }}" --output clock.zip
+          curl --fail --location "https://github.com/SwiftDevDevelopment/ClockAPP/releases/download/v2.0.0-preview.2-mac.1/${{ matrix.asset }}" --output clock.zip
           unzip -q clock.zip -d clock
       - name: Benchmark visible clock with seconds on and off
         shell: bash

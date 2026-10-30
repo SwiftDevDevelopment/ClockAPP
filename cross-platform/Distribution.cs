@@ -23,6 +23,16 @@ internal static class Distribution
         }
         if (rid.StartsWith("osx-"))
         {
+            foreach (var library in new[] { "libAvaloniaNative.dylib", "libHarfBuzzSharp.dylib", "libSkiaSharp.dylib" })
+                if (!File.Exists(Path.Combine(publish, library))) throw new FileNotFoundException("Mac publish output is missing a required native library.", library);
+            foreach (var library in Directory.GetFiles(publish, "*.dylib"))
+            {
+                var native = zip.CreateEntry("Clock Overlay.app/Contents/MacOS/" + Path.GetFileName(library), CompressionLevel.Optimal);
+                native.ExternalAttributes = (0x81ED << 16);
+                using var output = native.Open();
+                using var input = File.OpenRead(library);
+                input.CopyTo(output);
+            }
             Text("Clock Overlay.app/Contents/Info.plist", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"><plist version=\"1.0\"><dict><key>CFBundleExecutable</key><string>ClockOverlay</string><key>CFBundleIdentifier</key><string>dev.swiftdev.clockoverlay.preview</string><key>CFBundleName</key><string>Clock Overlay</string><key>CFBundlePackageType</key><string>APPL</string><key>CFBundleShortVersionString</key><string>2.0.0</string><key>CFBundleVersion</key><string>20002</string><key>LSUIElement</key><true/><key>NSHighResolutionCapable</key><true/></dict></plist>");
         }
         Text("Manual.txt", "SIMPLE CLOCK OVERLAY " + Program.Version + " - CROSS-PLATFORM PREVIEW\n\nExtract the ZIP before launching. Windows: run ClockOverlay.exe. Linux: run ./ClockOverlay (if needed, chmod +x ClockOverlay). Mac: open Clock Overlay.app. No separate .NET installation required.\n\nDrag the clock to move it. Right-click for Settings or Exit. Settings include timezone, format, seconds, font size, opacity and text/background colors (#RRGGBB). Reset all colors restores defaults. Save applies settings; Cancel discards changes.\n\n" + Updates.Notice + "\nGitHub Privacy Statement: https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement\n\nLINUX: experimental basic X11/XWayland support. Needs glibc and X11/font libraries. Native Wayland is not supported in this preview. Position, topmost and transparency vary by desktop/compositor; more code may be needed from the maintainer or users through pull requests.\n\nMAC: experimental, unsigned and not notarized; native logic checked in CI; desktop behavior still unverified. macOS may refuse to open it. No automatic update download or installation on macOS; obtain a new ZIP from GitHub Releases manually.\n\nWindows stable remains available as v1.2.2; this preview uses separate settings and update metadata. No high-frequency animations, background services or web runtime. Short Windows and Linux WSLg resource samples are documented in the repository; macOS has not been benchmarked.\n\nSupport/source/PRs: " + Updates.Repository + "\n");

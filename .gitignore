@@ -56,3 +56,7 @@ Desktop.ini
 .codex/
 .agents/
 .claude/
+
+# Benchmark tooling bytecode
+__pycache__/
+*.py[cod]

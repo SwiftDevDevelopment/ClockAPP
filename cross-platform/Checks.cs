@@ -64,11 +64,13 @@ internal static class Checks
             var offline = new FakeHandler(release, zipBytes) { Offline = true };
             using (var updater = new Updates(new HttpClient(offline), Path.Combine(root, "offline"))) { updater.Check(true).GetAwaiter().GetResult(); updater.Check(true).GetAwaiter().GetResult(); Check(offline.Count == (Updates.Supported ? 1 : 0), "Offline attempts respect 48-hour interval"); }
             var publish = Path.Combine(root, "publish"); Directory.CreateDirectory(publish); File.WriteAllBytes(Path.Combine(publish, "ClockOverlay"), executable);
+            foreach (var library in new[] { "libAvaloniaNative.dylib", "libHarfBuzzSharp.dylib", "libSkiaSharp.dylib" }) File.WriteAllBytes(Path.Combine(publish, library), executable);
             var mac = Path.Combine(root, "mac.zip"); Distribution.Create("osx-arm64", publish, mac);
             using (var archive = ZipFile.OpenRead(mac))
             {
                 var item = archive.GetEntry("Clock Overlay.app/Contents/MacOS/ClockOverlay");
                 Check(item is not null && ((item.ExternalAttributes >> 16) & 0x1FF) == 0x1ED && archive.GetEntry("Clock Overlay.app/Contents/Info.plist") is not null, "Mac bundle packaging and executable mode");
+                Check(archive.GetEntry("Clock Overlay.app/Contents/MacOS/libSkiaSharp.dylib") is not null && archive.GetEntry("Clock Overlay.app/Contents/MacOS/libAvaloniaNative.dylib") is not null && archive.GetEntry("Clock Overlay.app/Contents/MacOS/libHarfBuzzSharp.dylib") is not null, "Mac bundle includes native UI, graphics and text libraries");
             }
             lines.Add("All checks passed. HTTP is simulated; native desktop behavior must also be tested on each OS.");
             File.WriteAllLines(report, lines); return 0;
