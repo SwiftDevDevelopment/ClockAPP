@@ -41,5 +41,5 @@ Optionally delete the SimpleClockOverlay folder in Local AppData.
 
 NOTES
 Some exclusive fullscreen games may cover desktop overlays.
-The application is unsigned; Windows may show an unknown-publisher notice.
+The application is unsigned; Windows may show an unknown-publisher notice
 
