@@ -1,0 +1,36 @@
+name: Mac resource benchmark
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  benchmark:
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-15-intel
+            asset: ClockOverlay-Mac-Intel.zip
+            architecture: intel
+          - os: macos-latest
+            asset: ClockOverlay-Mac-Apple-Silicon.zip
+            architecture: apple-silicon
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download existing preview
+        shell: bash
+        run: |
+          curl --fail --location "https://github.com/SwiftDevDevelopment/ClockAPP/releases/download/v2.0.0-preview.2/${{ matrix.asset }}" --output clock.zip
+          unzip -q clock.zip -d clock
+      - name: Benchmark visible clock with seconds on and off
+        shell: bash
+        run: |
+          python3 benchmarks/macos.py "$PWD/clock/Clock Overlay.app/Contents/MacOS/ClockOverlay" "$PWD/results"
+          cat results/summary.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mac-benchmark-${{ matrix.architecture }}
+          path: results/
