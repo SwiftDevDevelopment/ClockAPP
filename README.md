@@ -34,12 +34,19 @@ Download the ZIP for your computer, extract it, and open the app. No separate .N
 
 The stable edition supports Windows 10/11, 64-bit. The preview adds basic Linux X11/XWayland support and Mac builds for Intel and Apple Silicon. Linux window behavior varies by desktop; fixes and pull requests are welcome. Mac builds are not notarized and desktop behavior needs further testing. See the [preview manual](cross-platform/README.md) for requirements and limitations.
 
+## Malware scan
+
+**30 October 2026: Microsoft Defender detected no threats** in the repository, application source and release folders, including archives. The scanned current-release ZIPs match GitHub's published SHA-256 hashes. [Scan details and file hashes](docs/MALWARE-SCAN.md).
+
+A clean scan is not a guarantee of complete safety. Use at your own risk.
+
 ## Privacy
 
 GitHub receives normal connection information, including your IP address, when the updater checks or downloads a file. Clock settings are not uploaded. The clock works offline. [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
 
 ---
 <sub>Development includes AI-assisted coding and documentation. Maintained by SwiftDevDevelopment.</sub>
+
 
 
 

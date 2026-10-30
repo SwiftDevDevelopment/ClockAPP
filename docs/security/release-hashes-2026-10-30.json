@@ -1,0 +1,27 @@
+[
+  {
+    "File": "SimpleClockOverlay-1.2.2-win-x64.zip",
+    "Bytes": 46161608,
+    "SHA256": "354d7979f4ecc916adc1740e7f01c0eb8d129e4857030bc05c2619c44e17a68c"
+  },
+  {
+    "File": "ClockOverlay-win-x64.zip",
+    "Bytes": 42144365,
+    "SHA256": "d4042d6df30c3d2edf816e8c9eb846d0230696aa6b8cfdf06dd2893ecba5c658"
+  },
+  {
+    "File": "ClockOverlay-linux-x64.zip",
+    "Bytes": 40133804,
+    "SHA256": "6a1a8f5794d799f6ef7c9b71185c5e8e128285c80bf0c3acdced02e9912d3302"
+  },
+  {
+    "File": "ClockOverlay-Mac-Apple-Silicon.zip",
+    "Bytes": 41363883,
+    "SHA256": "e3b69e47f34a0226090472b92fff5770aee72dc1f699b9f1513cef049bd9d7aa"
+  },
+  {
+    "File": "ClockOverlay-Mac-Intel.zip",
+    "Bytes": 42998520,
+    "SHA256": "7d79b3de6142e745e59f6589941c7b4e976c74b2973f066dd61a2cc7710cb902"
+  }
+]
