@@ -55,3 +55,5 @@ Newer versions download automatically over HTTPS, with checksum verification, to
 Auto updates are enabled by default. Disable them in Settings and click Save to stop future checks. GitHub receives normal connection information, including your IP address. Clock settings are not uploaded. The clock continues to work offline.
 
 
+
+[GitHub Privacy Statement — data collection and handling](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)
