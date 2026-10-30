@@ -5,7 +5,8 @@ A floating digital clock for Windows, with an experimental Linux and Mac edition
 ## Downloads
 
 - [Windows — stable release](https://github.com/SwiftDevDevelopment/ClockAPP/releases/latest)
-- [Windows, Linux and Mac — preview downloads](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.2)
+- [Windows/Linux preview](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.2)
+- [Mac preview — corrected package](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.2-mac.1)
 
 Download the ZIP for your computer, extract it, and open the app. No separate .NET installation is required. For Mac, choose **Apple Silicon** for M-series Macs or **Intel** for an Intel Mac.
 
@@ -39,3 +40,4 @@ GitHub receives normal connection information, including your IP address, when t
 
 ---
 <sub>Development includes AI-assisted coding and documentation. Maintained by SwiftDevDevelopment.</sub>
+
