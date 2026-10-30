@@ -1,0 +1,94 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "architecture": "arm64",
+  "os_version": "26.6.2",
+  "cpu_model": "Apple M1 (Virtual)",
+  "logical_cpus": 3,
+  "release": "2.0.0-preview.2",
+  "packaging_revision": "mac.1",
+  "warmup_seconds": 10,
+  "method": "Published binary; GUI window verified through CoreGraphics; ps RSS and process CPU time. 3 x 30-second samples per mode. Hosted-runner results, not physical-Mac guarantees.",
+  "samples": [
+    {
+      "seconds": true,
+      "run": 1,
+      "startup_to_visible_seconds": 3.477,
+      "sample_seconds": 32.09,
+      "cpu_seconds": 0.71,
+      "cpu_percent_one_core": 2.213,
+      "rss_mib_median": 181.8,
+      "rss_mib_peak": 183.1,
+      "visible_window_verified": true
+    },
+    {
+      "seconds": false,
+      "run": 2,
+      "startup_to_visible_seconds": 2.036,
+      "sample_seconds": 31.697,
+      "cpu_seconds": 0.27,
+      "cpu_percent_one_core": 0.852,
+      "rss_mib_median": 177.9,
+      "rss_mib_peak": 178.1,
+      "visible_window_verified": true
+    },
+    {
+      "seconds": true,
+      "run": 3,
+      "startup_to_visible_seconds": 1.856,
+      "sample_seconds": 33.137,
+      "cpu_seconds": 0.86,
+      "cpu_percent_one_core": 2.595,
+      "rss_mib_median": 175.7,
+      "rss_mib_peak": 176.4,
+      "visible_window_verified": true
+    },
+    {
+      "seconds": false,
+      "run": 4,
+      "startup_to_visible_seconds": 2.098,
+      "sample_seconds": 33.137,
+      "cpu_seconds": 0.11,
+      "cpu_percent_one_core": 0.332,
+      "rss_mib_median": 175.8,
+      "rss_mib_peak": 176.1,
+      "visible_window_verified": true
+    },
+    {
+      "seconds": true,
+      "run": 5,
+      "startup_to_visible_seconds": 1.413,
+      "sample_seconds": 32.729,
+      "cpu_seconds": 0.65,
+      "cpu_percent_one_core": 1.986,
+      "rss_mib_median": 178.9,
+      "rss_mib_peak": 180.3,
+      "visible_window_verified": true
+    },
+    {
+      "seconds": false,
+      "run": 6,
+      "startup_to_visible_seconds": 1.821,
+      "sample_seconds": 32.707,
+      "cpu_seconds": 0.22,
+      "cpu_percent_one_core": 0.673,
+      "rss_mib_median": 175.4,
+      "rss_mib_peak": 176.0,
+      "visible_window_verified": true
+    }
+  ],
+  "summary": [
+    {
+      "seconds": true,
+      "cpu_percent_one_core_median": 2.213,
+      "rss_mib_median": 178.9,
+      "subsequent_launch_seconds_median": 1.635
+    },
+    {
+      "seconds": false,
+      "cpu_percent_one_core_median": 0.673,
+      "rss_mib_median": 175.8,
+      "subsequent_launch_seconds_median": 2.036
+    }
+  ],
+  "first_launch_seconds": 3.477
+}

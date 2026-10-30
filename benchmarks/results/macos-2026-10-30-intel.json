@@ -1,0 +1,94 @@
+{
+  "platform": "macOS-15.7.9-x86_64-i386-64bit-Mach-O",
+  "architecture": "x86_64",
+  "os_version": "15.7.9",
+  "cpu_model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+  "logical_cpus": 4,
+  "release": "2.0.0-preview.2",
+  "packaging_revision": "mac.1",
+  "warmup_seconds": 10,
+  "method": "Published binary; GUI window verified through CoreGraphics; ps RSS and process CPU time. 3 x 30-second samples per mode. Hosted-runner results, not physical-Mac guarantees.",
+  "samples": [
+    {
+      "seconds": true,
+      "run": 1,
+      "startup_to_visible_seconds": 10.209,
+      "sample_seconds": 32.407,
+      "cpu_seconds": 0.81,
+      "cpu_percent_one_core": 2.499,
+      "rss_mib_median": 117.0,
+      "rss_mib_peak": 120.7,
+      "visible_window_verified": true
+    },
+    {
+      "seconds": false,
+      "run": 2,
+      "startup_to_visible_seconds": 1.964,
+      "sample_seconds": 32.907,
+      "cpu_seconds": 0.22,
+      "cpu_percent_one_core": 0.669,
+      "rss_mib_median": 121.4,
+      "rss_mib_peak": 122.3,
+      "visible_window_verified": true
+    },
+    {
+      "seconds": true,
+      "run": 3,
+      "startup_to_visible_seconds": 1.958,
+      "sample_seconds": 32.632,
+      "cpu_seconds": 0.84,
+      "cpu_percent_one_core": 2.574,
+      "rss_mib_median": 120.6,
+      "rss_mib_peak": 124.4,
+      "visible_window_verified": true
+    },
+    {
+      "seconds": false,
+      "run": 4,
+      "startup_to_visible_seconds": 2.174,
+      "sample_seconds": 33.013,
+      "cpu_seconds": 0.13,
+      "cpu_percent_one_core": 0.394,
+      "rss_mib_median": 122.0,
+      "rss_mib_peak": 122.3,
+      "visible_window_verified": true
+    },
+    {
+      "seconds": true,
+      "run": 5,
+      "startup_to_visible_seconds": 2.479,
+      "sample_seconds": 32.451,
+      "cpu_seconds": 0.92,
+      "cpu_percent_one_core": 2.835,
+      "rss_mib_median": 120.7,
+      "rss_mib_peak": 124.5,
+      "visible_window_verified": true
+    },
+    {
+      "seconds": false,
+      "run": 6,
+      "startup_to_visible_seconds": 2.204,
+      "sample_seconds": 32.877,
+      "cpu_seconds": 0.21,
+      "cpu_percent_one_core": 0.639,
+      "rss_mib_median": 121.5,
+      "rss_mib_peak": 122.4,
+      "visible_window_verified": true
+    }
+  ],
+  "summary": [
+    {
+      "seconds": true,
+      "cpu_percent_one_core_median": 2.574,
+      "rss_mib_median": 120.6,
+      "subsequent_launch_seconds_median": 2.219
+    },
+    {
+      "seconds": false,
+      "cpu_percent_one_core_median": 0.639,
+      "rss_mib_median": 121.5,
+      "subsequent_launch_seconds_median": 2.174
+    }
+  ],
+  "first_launch_seconds": 10.209
+}

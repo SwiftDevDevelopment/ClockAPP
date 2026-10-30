@@ -149,5 +149,13 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    profile = Path.home() / 'Library/Application Support/SimpleClockOverlay.CrossPlatform/settings.json'
+    original = profile.read_bytes() if profile.exists() else None
+    try:
+        main()
+    finally:
+        if original is not None:
+            profile.write_bytes(original)
+        elif profile.exists():
+            profile.unlink()
 

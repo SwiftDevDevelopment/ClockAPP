@@ -12,7 +12,7 @@ Download the ZIP for your computer, extract it, and open the app. No separate .N
 
 ## Quick links
 
-[Preview manual and platform support](cross-platform/README.md) · [Performance measurements](cross-platform/PERFORMANCE.md) · [Contributing and build guide](cross-platform/CONTRIBUTING.md) · [Report a problem](https://github.com/SwiftDevDevelopment/ClockAPP/issues)
+[Preview manual and platform support](cross-platform/README.md) · [Performance measurements](cross-platform/PERFORMANCE.md) · [Mac benchmark method](benchmarks/README.md) · [Contributing and build guide](cross-platform/CONTRIBUTING.md) · [Report a problem](https://github.com/SwiftDevDevelopment/ClockAPP/issues)
 
 ## Using the clock
 
@@ -40,4 +40,5 @@ GitHub receives normal connection information, including your IP address, when t
 
 ---
 <sub>Development includes AI-assisted coding and documentation. Maintained by SwiftDevDevelopment.</sub>
+
 
