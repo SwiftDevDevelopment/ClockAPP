@@ -1,6 +1,58 @@
-.dotnet-home/
+# Build output and downloaded dependencies
 **/bin/
 **/obj/
-dist/
-release/
+/build/
+/dist/
+/release/
+/.dotnet-home/
+/.nuget/
+/packages/
 *.zip
+*.tar.gz
+*.deb
+*.nupkg
+
+# Local workspace utilities and diagnostics (not part of the app)
+/tools/
+/artifacts/
+/local/
+/installer-integration/
+/preview-*-test/
+/linux-test-deps/
+/linux-perf-profile/
+**/TEST-RESULTS-*.txt
+*.log
+*.dmp
+/core
+core.*
+*.tmp
+*.partial
+
+# Editor and user-specific state
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.sln.docstates
+*.DotSettings.user
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local credentials, signing material and application profiles
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.key
+*.pem
+**/settings.json
+**/update-state.json*
+**/install-error.txt
+
+# Local AI/editor session state
+.codex/
+.agents/
+.claude/

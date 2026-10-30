@@ -48,7 +48,12 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && runner.os != 'Windows'
         shell: bash
         run: |
-          curl --fail --location "https://github.com/SwiftDevDevelopment/ClockAPP/releases/download/v2.0.0-preview.2/ClockOverlay-${{ matrix.rid }}.zip" --output published.zip
+          case "${{ matrix.rid }}" in
+            osx-arm64) asset="ClockOverlay-Mac-Apple-Silicon.zip" ;;
+            osx-x64) asset="ClockOverlay-Mac-Intel.zip" ;;
+            *) asset="ClockOverlay-${{ matrix.rid }}.zip" ;;
+          esac
+          curl --fail --location "https://github.com/SwiftDevDevelopment/ClockAPP/releases/download/v2.0.0-preview.2/$asset" --output published.zip
           unzip -q published.zip -d published
           if [ "${{ runner.os }}" = "macOS" ]; then
             binary="$PWD/published/Clock Overlay.app/Contents/MacOS/ClockOverlay"
@@ -66,6 +71,7 @@ jobs:
             test-results.txt
             published-results.txt
             ui-results.txt*
+
 
 
 

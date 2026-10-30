@@ -1,16 +1,14 @@
-# Measured preview resource use
+# Performance
 
-Windows test, 30 October 2026. Software-rendered self-contained win-x64 preview, default font, seconds visible, settings closed. After startup settled, a 20-second sample measured:
+Measured on 30 October 2026 with seconds visible and Settings closed.
 
-- Working set: 109.5 MiB
-- Private committed memory: 40.0 MiB
-- CPU time delta: 0 ms at Windows process CPU-counter resolution in that sample
+| Environment | Memory | CPU sample |
+| --- | --- | --- |
+| Windows, software rendering | 109.5 MiB working set; 40 MiB private memory | Below the process counter's resolution during a settled 20-second sample |
+| Ubuntu WSLg, software rendering | 121.8 MiB resident memory | 1.5% of one CPU core over 20 seconds, after a 5-second warmup |
 
-This short idle sample is not a guarantee of zero CPU. An earlier startup sample measured 0.94% of one CPU core over 20 seconds. Window visibility, display scale, fonts, OS, graphics drivers, settings interactions and update downloads change these values. macOS has not been benchmarked; see the Linux sample below.
+These are short samples, not minimum requirements or guarantees. Startup, display scaling, fonts, settings and downloads affect usage. WSLg results may differ from a regular Linux desktop. macOS has not been benchmarked.
 
-Default GPU rendering used about 191 MiB working set in a warm sample. The preview therefore selects software rendering on Windows and X11. No GPU-rendering or low-memory claims are made for macOS.
+Windows and X11 use software rendering. The default GPU renderer used around 191 MiB working set in the Windows test. The original Windows Forms edition remains available for users who prefer it.
 
-A cross-platform graphics toolkit has a memory cost. Keep the original Windows Forms edition if minimizing Windows memory is more important than using the cross-platform preview. No continuous animation, app-wide polling loop, background service, web runtime or updater daemon is used.
-
-Linux WSLg: 121.8 MiB resident memory and 1.5% of one CPU core in a 20-second sample after a 5-second warmup (seconds visible). This virtualized environment is not a normal-desktop guarantee.
-
+The clock updates once per second, with no continuous animations, web runtime, background service or updater daemon. Update scheduling uses a separate one-minute timer and only contacts GitHub when the 48-hour interval is due.

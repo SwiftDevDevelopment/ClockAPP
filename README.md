@@ -1,71 +1,43 @@
-# Simple Clock Overlay for Windows
-A simple floating digital clock for Windows 10 and Windows 11 (64-bit). Keep the time visible above other apps with an always-on-top desktop overlay, customizable text and background colors, transparency, and timezone support.
+# Simple Clock Overlay
 
-[Download the latest Windows release](https://github.com/SwiftDevDevelopment/ClockAPP/releases/latest) — extract the ZIP and run the EXE. No installation required.
+A floating digital clock for Windows, with an experimental Linux and Mac edition. Drag it anywhere, keep it above other windows, and adjust the colors, size and transparency.
 
+## Downloads
 
-## Experimental Linux and macOS preview
+- [Windows — stable release](https://github.com/SwiftDevDevelopment/ClockAPP/releases/latest)
+- [Windows, Linux and Mac — preview downloads](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.2)
 
-A separate [cross-platform preview](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.2) is available for Linux x64, Intel/Apple Silicon Mac, and Windows x64. The stable Windows download above stays unchanged.
+Download the ZIP for your computer, extract it, and open the app. No separate .NET installation is required. For Mac, choose **Apple Silicon** for M-series Macs or **Intel** for an Intel Mac.
 
-Linux support is basic and experimental (X11/XWayland). More code may be needed from the maintainer or community; pull requests are welcome. macOS builds are unsigned, unverified on a physical Mac, and use manual updates only. Windows/Linux preview updates have their own channel and do not migrate existing Windows installations.
+## Quick links
 
-[Preview manual, platform limits, source and contribution guide](cross-platform/README.md) · [Measured resource use](cross-platform/PERFORMANCE.md). The cross-platform toolkit uses more memory than the original Windows Forms app; no near-zero resource claim is made.
+[Preview manual and platform support](cross-platform/README.md) · [Performance measurements](cross-platform/PERFORMANCE.md) · [Contributing and build guide](cross-platform/CONTRIBUTING.md) · [Report a problem](https://github.com/SwiftDevDevelopment/ClockAPP/issues)
 
-## Get Started
-1. Extract the ZIP into a folder of your choice.
-2. Double-click SimpleClockOverlay.exe.
-That's it. No installation or separate .NET download is needed.
+## Using the clock
 
-## Move The Clock
+Drag with the left mouse button to move it. Right-click for **Settings** or **Exit**.
 
-Hold the left mouse button on the clock and drag it anywhere.
-Your position is remembered the next time you launch it.
+Settings include timezone, Always on Top, 12/24-hour format, seconds, font size, background opacity, and separate text/background colors. **Reset all colors** restores white text and the dark background. Click **Save** to apply changes or **Cancel** to discard them.
 
-## Settings
-Right-click the clock and choose Settings.
-- Timezone: choose where the clock gets its local time.
-  Default: Copenhagen. Daylight saving is handled automatically.
-- Always on Top: keep the clock above normal application windows.
-- Time format: choose 24-hour or 12-hour (AM/PM).
-- Seconds: show or hide seconds.
-- Font size: make the clock larger or smaller.
-- Background (%): adjust background opacity. 0% hides the background.
-- Text color: choose the clock text color.
-- Background color: choose the clock background color.
-- Reset all colors: restore white text and the original dark background.
-Click Save to apply changes, or Cancel to discard them.
-At 0% background opacity, click directly on the clock text to interact.
+The default timezone is Copenhagen. Daylight saving follows your system's timezone data. Position and preferences are remembered between launches.
 
-## Exit
-Right-click the clock and choose Exit.
+## Platform support
 
-## Update
-Exit the old clock before launching a new version.
-Your saved settings are retained.
+The stable edition supports Windows 10/11, 64-bit. The preview adds basic Linux X11/XWayland support and Mac builds for Intel and Apple Silicon. Linux window behavior varies by desktop; fixes and pull requests are welcome. Mac builds are not notarized and desktop behavior needs further testing. See the [preview manual](cross-platform/README.md) for requirements and limitations.
 
-## Settings Location
-%LOCALAPPDATA%\SimpleClockOverlay\settings.json
+## Updates and privacy
 
-## Uninstall
-Exit the clock and delete its application folder.
-Optionally delete the SimpleClockOverlay folder in Local AppData.
+Windows and the Windows/Linux preview check GitHub at most once every 48 hours while running. Failed checks also wait 48 hours, and the schedule survives restarts. Only newer versions are downloaded. When one is ready, click **Update and restart** in Settings; the clock saves your settings, installs it and restarts.
 
-## Notes
-Some exclusive fullscreen games may cover desktop overlays.
-The application is unsigned; Windows may show an unknown-publisher notice
+Mac preview updates are manual. The preview uses a separate update channel and does not replace the stable Windows edition.
 
+Automatic checks can be disabled in Settings. GitHub receives normal connection information, including your IP address; clock settings are not uploaded. The clock works offline. [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
 
-## Auto Updates
-While running, the clock checks SwiftDevDevelopment/ClockAPP on GitHub at most once every 48 hours. The schedule is remembered across restarts, and failed/offline attempts also wait 48 hours. No checks run while the app is closed.
+## Settings and removal
 
-Newer versions download automatically over HTTPS, with checksum verification, to %LOCALAPPDATA%\SimpleClockOverlay\Updates. When an update is ready, open Settings and click Update and restart. The clock saves your settings, closes, installs the downloaded version and restarts automatically. No file copying is needed. Keep the application in a folder you can write to, such as Downloads or a folder in your user profile. If installation fails, the old application is kept or restored, with a message explaining the problem.
+The stable Windows edition saves preferences to `%LOCALAPPDATA%\SimpleClockOverlay\settings.json`. Preview locations are listed in its manual.
 
-Auto updates are enabled by default. Disable them in Settings and click Save to stop future checks. GitHub receives normal connection information, including your IP address. Clock settings are not uploaded. The clock continues to work offline.
+To remove the app, exit it and delete its application folder. Optionally delete its settings folder too. The application is unsigned, so Windows may show an unknown-publisher notice. Exclusive-fullscreen apps may cover the overlay.
 
-
-
-[GitHub Privacy Statement — data collection and handling](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)
-
-
-
+---
+<sub>Development includes AI-assisted coding and documentation. Maintained by SwiftDevDevelopment.</sub>

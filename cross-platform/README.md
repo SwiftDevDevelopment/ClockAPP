@@ -10,8 +10,8 @@ Use the assets on [v2.0.0-preview.2](https://github.com/SwiftDevDevelopment/Cloc
 | --- | --- | --- |
 | ClockOverlay-win-x64.zip | Windows preview; runtime and settings render checked here | 48-hour download check; click Update and restart |
 | ClockOverlay-linux-x64.zip | Experimental basic Linux, X11/XWayland; logic and renders checked in Ubuntu WSLg | Same updater implemented; native installation flow still needs Linux testing |
-| ClockOverlay-osx-x64.zip | Experimental Intel Mac build; native binary/logic checked in CI; desktop unverified | Manual only |
-| ClockOverlay-osx-arm64.zip | Experimental Apple Silicon Mac build; native binary/logic checked in CI; desktop unverified | Manual only |
+| ClockOverlay-Mac-Intel.zip | Experimental Intel Mac build; native binary/logic checked in CI; desktop unverified | Manual only |
+| ClockOverlay-Mac-Apple-Silicon.zip | Experimental Apple Silicon Mac build; native binary/logic checked in CI; desktop unverified | Manual only |
 
 Extract the ZIP before launching. Windows: double-click ClockOverlay.exe. Linux: run `./ClockOverlay`; if the archive tool dropped executable permissions, run `chmod +x ClockOverlay` first. macOS: open Clock Overlay.app. No separate .NET installation is required. macOS builds are unsigned and not notarized, so Gatekeeper may refuse them. This preview does not weaken OS security settings or attempt to bypass them.
 
@@ -48,6 +48,7 @@ See PERFORMANCE.md for the measured Windows sample. Linux WSLg measured about 12
 Windows passed 19 logic/update/packaging checks. Linux passed 20 native checks (including executable permissions) in the existing Ubuntu WSL environment. Clock and Settings were rendered and visually inspected on both Windows and Ubuntu WSLg. The minimal WSL environment needed libICE/libSM; isolated copies were used for testing without installing system packages. This is not equivalent to validation across Linux desktops. Cross-compiled release binaries also passed native logic checks on Intel Mac, Apple Silicon Mac and Linux in CI (run 41051912955), after correcting executable permission handling in the test. Preview.2 fixes ZIP creator metadata so Unix extractors preserve executable permissions directly. macOS desktop behavior remains unverified. Native Linux and Mac tests remain required, particularly dragging, transparent backgrounds, topmost, mixed-DPI monitors, focus, macOS opening restrictions and Linux update/restart. The installer helper was also exercised on Windows and Linux with isolated copied executables: wait for parent exit, replace, retain backup, and restart into the self-test runner. Interactive Update-button behavior and failures across Linux distributions still need field testing.
 
 The native CI workflow can be run manually and checks contributions to this edition. See CONTRIBUTING.md. Final native CI passed on all four targets, including execution of the actual published Unix ZIPs without chmod: [run 41052534607](https://github.com/SwiftDevDevelopment/ClockAPP/actions/runs/41052534607). This validates the preview.2 archive permission fix; it does not establish macOS desktop/Gatekeeper behavior or universal Linux compositor compatibility.
+
 
 
 
