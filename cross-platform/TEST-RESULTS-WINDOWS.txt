@@ -1,0 +1,20 @@
+PASS: Copenhagen winter
+PASS: Copenhagen summer
+PASS: Spring DST transition
+PASS: Autumn DST transition
+PASS: 12-hour format without seconds
+PASS: Settings and colors persist
+PASS: Settings normalize invalid input
+PASS: Corrupt settings recover
+PASS: 48-hour scheduling boundary
+PASS: Preview version ordering
+PASS: Installer replaces and retains one backup
+PASS: Changed download rejected before replacement
+PASS: Disabled checks do not contact network
+PASS: Verified new version downloaded and staged
+PASS: No repeated downloads within 48 hours
+PASS: Check timestamp survives restart
+PASS: Invalid archive checksum never enables installation
+PASS: Offline attempts respect 48-hour interval
+PASS: Mac bundle packaging and executable mode
+All checks passed. HTTP is simulated; native desktop behavior must also be tested on each OS.

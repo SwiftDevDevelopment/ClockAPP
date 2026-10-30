@@ -1,0 +1,54 @@
+name: Cross-platform preview checks
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'cross-platform/**'
+      - '.github/workflows/cross-platform.yml'
+permissions:
+  contents: read
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+            executable: ClockOverlay.exe
+          - os: ubuntu-latest
+            rid: linux-x64
+            executable: ClockOverlay
+          - os: macos-15-intel
+            rid: osx-x64
+            executable: ClockOverlay
+          - os: macos-latest
+            rid: osx-arm64
+            executable: ClockOverlay
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - name: Build preview
+        run: dotnet publish cross-platform/ClockOverlay.csproj -c Release -r ${{ matrix.rid }} -o publish -p:NuGetAudit=false
+      - name: Logic, updater and packaging checks
+        shell: bash
+        run: |
+          ./publish/${{ matrix.executable }} --self-test "$PWD/test-results.txt"
+          cat test-results.txt
+      - name: Linux settings render under Xvfb
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          xvfb-run -a ./publish/ClockOverlay --ui-check "$PWD/ui-results.txt"
+          grep '^PASS:' ui-results.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: checks-${{ matrix.rid }}
+          path: |
+            test-results.txt
+            ui-results.txt*
+

@@ -3,6 +3,15 @@ A simple floating digital clock for Windows 10 and Windows 11 (64-bit). Keep the
 
 [Download the latest Windows release](https://github.com/SwiftDevDevelopment/ClockAPP/releases/latest) — extract the ZIP and run the EXE. No installation required.
 
+
+## Experimental Linux and macOS preview
+
+A separate [cross-platform preview](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.1) is available for Linux x64, Intel/Apple Silicon Mac, and Windows x64. The stable Windows download above stays unchanged.
+
+Linux support is basic and experimental (X11/XWayland). More code may be needed from the maintainer or community; pull requests are welcome. macOS builds are unsigned, unverified on a physical Mac, and use manual updates only. Windows/Linux preview updates have their own channel and do not migrate existing Windows installations.
+
+[Preview manual, platform limits, source and contribution guide](cross-platform/README.md) · [Measured resource use](cross-platform/PERFORMANCE.md). The cross-platform toolkit uses more memory than the original Windows Forms app; no near-zero resource claim is made.
+
 ## Get Started
 1. Extract the ZIP into a folder of your choice.
 2. Double-click SimpleClockOverlay.exe.
@@ -57,4 +66,5 @@ Auto updates are enabled by default. Disable them in Settings and click Save to 
 
 
 [GitHub Privacy Statement — data collection and handling](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)
+
 
