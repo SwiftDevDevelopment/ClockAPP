@@ -15,29 +15,27 @@ Download the ZIP for your computer, extract it, and open the app. No separate .N
 
 ## Using the clock
 
-Drag with the left mouse button to move it. Right-click for **Settings** or **Exit**.
+**Move:** drag the clock with the left mouse button. Position and preferences are remembered between launches.
 
-Settings include timezone, Always on Top, 12/24-hour format, seconds, font size, background opacity, and separate text/background colors. **Reset all colors** restores white text and the dark background. Click **Save** to apply changes or **Cancel** to discard them.
+**Settings:** right-click and choose Settings. Adjust timezone, Always on Top, 12/24-hour format, seconds, font size, background opacity and separate text/background colors. Reset all colors restores white text and the dark background. Save applies changes; Cancel discards them. At 0% background opacity, click directly on the text to interact. The default timezone is Copenhagen; daylight saving follows your system's timezone data.
 
-The default timezone is Copenhagen. Daylight saving follows your system's timezone data. Position and preferences are remembered between launches.
+**Exit:** right-click and choose Exit.
+
+**Updates:** Windows and the Windows/Linux preview check GitHub at most once every 48 hours while running. The schedule survives restarts and also applies to failed checks. Only newer versions download. Click Update and restart in Settings to install and relaunch with your saved preferences. Checks can be disabled in Settings. Mac preview updates are manual. The preview uses a separate channel and does not replace the stable Windows edition.
+
+**Settings location:** the stable Windows edition uses `%LOCALAPPDATA%\SimpleClockOverlay\settings.json`. Other platform locations are in the preview manual.
+
+**Removal:** exit the clock and delete its application folder. Optionally delete its settings folder too.
+
+**Notes:** exclusive-fullscreen apps may cover the overlay. The application is unsigned, so Windows may show an unknown-publisher notice.
 
 ## Platform support
 
 The stable edition supports Windows 10/11, 64-bit. The preview adds basic Linux X11/XWayland support and Mac builds for Intel and Apple Silicon. Linux window behavior varies by desktop; fixes and pull requests are welcome. Mac builds are not notarized and desktop behavior needs further testing. See the [preview manual](cross-platform/README.md) for requirements and limitations.
 
-## Updates and privacy
+## Privacy
 
-Windows and the Windows/Linux preview check GitHub at most once every 48 hours while running. Failed checks also wait 48 hours, and the schedule survives restarts. Only newer versions are downloaded. When one is ready, click **Update and restart** in Settings; the clock saves your settings, installs it and restarts.
-
-Mac preview updates are manual. The preview uses a separate update channel and does not replace the stable Windows edition.
-
-Automatic checks can be disabled in Settings. GitHub receives normal connection information, including your IP address; clock settings are not uploaded. The clock works offline. [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
-
-## Settings and removal
-
-The stable Windows edition saves preferences to `%LOCALAPPDATA%\SimpleClockOverlay\settings.json`. Preview locations are listed in its manual.
-
-To remove the app, exit it and delete its application folder. Optionally delete its settings folder too. The application is unsigned, so Windows may show an unknown-publisher notice. Exclusive-fullscreen apps may cover the overlay.
+GitHub receives normal connection information, including your IP address, when the updater checks or downloads a file. Clock settings are not uploaded. The clock works offline. [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
 
 ---
 <sub>Development includes AI-assisted coding and documentation. Maintained by SwiftDevDevelopment.</sub>
