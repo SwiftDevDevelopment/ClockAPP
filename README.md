@@ -1,17 +1,17 @@
 # Simple Clock Overlay — Quick Guide
 Windows 10/11, 64-bit
 
-GET STARTED
+GET STARTED:
 1. Extract the ZIP into a folder of your choice.
 2. Double-click SimpleClockOverlay.exe.
 That's it. No installation or separate .NET download is needed.
 
-MOVE THE CLOCK
+MOVE THE CLOCK:
 
 Hold the left mouse button on the clock and drag it anywhere.
 Your position is remembered the next time you launch it.
 
-SETTINGS
+SETTINGS:
 Right-click the clock and choose Settings.
 - Timezone: choose where the clock gets its local time.
   Default: Copenhagen. Daylight saving is handled automatically.
@@ -26,21 +26,21 @@ Right-click the clock and choose Settings.
 Click Save to apply changes, or Cancel to discard them.
 At 0% background opacity, click directly on the clock text to interact.
 
-EXIT
+EXIT:
 Right-click the clock and choose Exit.
 
-UPDATE
+UPDATE:
 Exit the old clock before launching a new version.
 Your saved settings are retained.
 
-SETTINGS LOCATION
+SETTINGS LOCATION:
 %LOCALAPPDATA%\SimpleClockOverlay\settings.json
 
-UNINSTALL
+UNINSTALL:
 Exit the clock and delete its application folder.
 Optionally delete the SimpleClockOverlay folder in Local AppData.
 
-NOTES
+NOTES:
 Some exclusive fullscreen games may cover desktop overlays.
 The application is unsigned; Windows may show an unknown-publisher notice
 
