@@ -12,7 +12,7 @@ jobs:
           - os: windows-latest
             rid: win-x64
             edition: stable
-            asset: SimpleClockOverlay-1.2.4-win-x64.zip
+            asset: SimpleClockOverlay-1.2.5-win-x64.zip
           - os: windows-latest
             rid: win-x64
             edition: preview

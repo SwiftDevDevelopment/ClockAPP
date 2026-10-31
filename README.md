@@ -42,7 +42,9 @@ Released 31 October 2026:
 
 These features are implemented in the Windows Forms and cross-platform editions. Startup is Windows-only. The date uses the system locale on Linux and Mac. The downloads above include these changes.
 
-**Validation — 31 October 2026:** [Native release builds and checks passed](https://github.com/SwiftDevDevelopment/ClockAPP/actions/runs/41183839495) on Windows, Linux, Intel Mac and Apple Silicon Mac, including regional date formats and timezone midnight rollover. Preview clock renders passed on all four platforms, and Windows startup registration/removal checks passed. A real Windows sign-out/sign-in startup test is still pending. NuGet's online vulnerability check completed for both projects, including indirect dependencies, and reported no known vulnerable packages. This dependency check is separate from the dated antivirus scan below and is not a guarantee of complete safety.
+**Windows rendering validation — 31 October 2026:** [Windows 1.2.5 release checks passed](https://github.com/SwiftDevDevelopment/ClockAPP/actions/runs/41184502432), including transparent-edge checks and renders at 100%, 125%, 150% and 200% DPI. Physical multi-monitor DPI changes still need manual verification.
+
+**Other validation — 31 October 2026:** [Native release builds and checks passed](https://github.com/SwiftDevDevelopment/ClockAPP/actions/runs/41183839495) on Windows, Linux, Intel Mac and Apple Silicon Mac, including regional date formats and timezone midnight rollover. Preview clock renders passed on all four platforms, and Windows startup registration/removal checks passed. A real Windows sign-out/sign-in startup test is still pending. NuGet's online vulnerability check completed for both projects, including indirect dependencies, and reported no known vulnerable packages. This dependency check is separate from the dated antivirus scan below and is not a guarantee of complete safety.
 
 </details>
 
