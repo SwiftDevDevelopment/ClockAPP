@@ -60,3 +60,6 @@ Desktop.ini
 # Benchmark tooling bytecode
 __pycache__/
 *.py[cod]
+
+# Extracted local copy of the Windows download
+/SimpleClockOverlay-win-x64/

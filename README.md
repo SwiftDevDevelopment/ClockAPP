@@ -30,6 +30,17 @@ Download the ZIP for your computer, extract it, and open the app. No separate .N
 
 **Notes:** exclusive-fullscreen apps may cover the overlay. The application is unsigned, so Windows may show an unknown-publisher notice.
 
+## Upcoming changes
+
+The source now includes these changes for the next release:
+
+- **Date below the time:** displayed at 65% of the clock text size, in the same color. The date follows the selected timezone and your system's regional short-date format, including custom formats.
+- **Start with Windows:** optional and disabled by default. Enable it in Settings and click Save. It applies only to your Windows account and needs no administrator access. Turn it off before removing the app; after moving the executable, open it from the new folder and save the setting again.
+
+Both features are implemented in the Windows Forms and cross-platform editions. Startup is Windows-only. The date uses the system locale on Linux and Mac, but this new display still needs native testing there. Existing release downloads do not yet include these changes.
+
+**Validation — 31 October 2026:** both Windows test suites passed, including regional date formats, custom patterns, timezone midnight rollover and startup registration/removal. A real Windows sign-out/sign-in startup test is still pending. NuGet's online vulnerability check completed for both projects, including indirect dependencies, and reported no known vulnerable packages. This dependency check is separate from the dated antivirus scan below and is not a guarantee of complete safety.
+
 ## Platform support
 
 The stable edition supports Windows 10/11, 64-bit. The preview adds basic Linux X11/XWayland support and Mac builds for Intel and Apple Silicon. Linux window behavior varies by desktop; fixes and pull requests are welcome. Mac builds are not notarized and desktop behavior needs further testing. See the [preview manual](cross-platform/README.md) for requirements and limitations.
@@ -46,7 +57,3 @@ GitHub receives normal connection information, including your IP address, when t
 
 ---
 <sub>Development includes AI-assisted coding and documentation. Maintained by SwiftDevDevelopment.</sub>
-
-
-
-

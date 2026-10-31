@@ -53,6 +53,6 @@ internal sealed class Preferences
     }
     internal Preferences Copy() => (Preferences)MemberwiseClone();
     internal string Format(DateTimeOffset now) => TimeZoneInfo.ConvertTime(now, TimeZoneInfo.FindSystemTimeZoneById(TimeZoneId)).ToString(Use24Hour ? (ShowSeconds ? "HH:mm:ss" : "HH:mm") : (ShowSeconds ? "hh:mm:ss tt" : "hh:mm tt"), CultureInfo.InvariantCulture);
+    internal string Date(DateTimeOffset now) => TimeZoneInfo.ConvertTime(now, TimeZoneInfo.FindSystemTimeZoneById(TimeZoneId)).ToString("d", CultureInfo.CurrentCulture);
     internal Color Background { get { var color = Color.Parse(BackgroundColor); return Color.FromArgb((byte)(BackgroundOpacity * 255 / 100), color.R, color.G, color.B); } }
 }
-

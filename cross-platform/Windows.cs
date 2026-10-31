@@ -11,6 +11,7 @@ internal sealed class ClockWindow : Window
     Preferences preferences;
     readonly bool testing;
     readonly TextBlock text = new() { Foreground = Brushes.White, FontFamily = new FontFamily("Segoe UI, Noto Sans, DejaVu Sans, Helvetica Neue, sans-serif"), VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+    readonly TextBlock date = new() { HorizontalAlignment = HorizontalAlignment.Center };
     readonly Border background = new() { CornerRadius = new CornerRadius(12), Padding = new Thickness(16, 8) };
     readonly DispatcherTimer timer = new() { Interval = TimeSpan.FromSeconds(1) };
     readonly Updates updates = new();
@@ -26,7 +27,10 @@ internal sealed class ClockWindow : Window
         CanResize = false; ShowActivated = false; SizeToContent = SizeToContent.WidthAndHeight;
         Background = Brushes.Transparent;
         TransparencyLevelHint = new[] { WindowTransparencyLevel.Transparent };
-        background.Child = text; Content = background;
+        var lines = new StackPanel { Spacing = 2 };
+        lines.Children.Add(text); lines.Children.Add(date);
+        date.FontFamily = text.FontFamily;
+        background.Child = lines; Content = background;
         var menu = new ContextMenu();
         var settings = new MenuItem { Header = "Settings…" };
         settings.Click += async (_, _) => await OpenSettings();
@@ -41,13 +45,17 @@ internal sealed class ClockWindow : Window
     }
     void Tick()
     {
-        var current = preferences.Format(DateTimeOffset.UtcNow);
+        var now = DateTimeOffset.UtcNow;
+        var currentDate = preferences.Date(now);
+        if (date.Text != currentDate) date.Text = currentDate;
+        var current = preferences.Format(now);
         if (current != lastText) { text.Text = current; lastText = current; }
     }
     void Apply()
     {
         Topmost = preferences.AlwaysOnTop; text.FontSize = preferences.FontSize * 96d / 72;
         text.Foreground = new SolidColorBrush(Color.Parse(preferences.TextColor));
+        date.Foreground = text.Foreground; date.FontSize = text.FontSize * 0.65;
         background.Background = new SolidColorBrush(preferences.Background);
         lastText = ""; Tick();
     }
@@ -118,6 +126,13 @@ internal sealed class SettingsWindow : Window
         var zone = new ComboBox { ItemsSource = zones, SelectedItem = zones.First(z => z.Id == selected.Id), HorizontalAlignment = HorizontalAlignment.Stretch };
         Add("Timezone", zone);
         var top = new CheckBox { Content = "Always on Top", IsChecked = value.AlwaysOnTop }; stack.Children.Add(top);
+        var startup = new CheckBox { Content = "Start with Windows (off by default)", IsVisible = OperatingSystem.IsWindows() };
+        if (OperatingSystem.IsWindows())
+        {
+            try { startup.IsChecked = WindowsStartup.Enabled(); }
+            catch (Exception e) when (e is System.Security.SecurityException or UnauthorizedAccessException or IOException) { startup.IsEnabled = false; }
+        }
+        stack.Children.Add(startup);
         var format = new ComboBox { ItemsSource = new[] { "24-hour", "12-hour (AM/PM)" }, SelectedIndex = value.Use24Hour ? 0 : 1 }; Add("Time format", format);
         var seconds = new CheckBox { Content = "Show seconds", IsChecked = value.ShowSeconds }; stack.Children.Add(seconds);
         var size = new NumericUpDown { Minimum = 14, Maximum = 96, Value = value.FontSize, FormatString = "0" }; Add("Font size (points)", size);
@@ -143,6 +158,12 @@ internal sealed class SettingsWindow : Window
         bool SaveValue()
         {
             if (!Preferences.ValidColor(foreground.Text) || !Preferences.ValidColor(backgroundColor.Text)) { error.Text = "Enter each color as #RRGGBB, for example #FFFFFF."; return false; }
+            if (OperatingSystem.IsWindows() && startup.IsEnabled)
+            {
+                try { WindowsStartup.SetEnabled(startup.IsChecked == true); }
+                catch (Exception e) when (e is System.Security.SecurityException or UnauthorizedAccessException or IOException)
+                { error.Text = "Could not change Windows startup: " + e.Message; return false; }
+            }
             value.TimeZoneId = ((TimeZoneInfo)zone.SelectedItem!).Id; value.AlwaysOnTop = top.IsChecked == true;
             value.Use24Hour = format.SelectedIndex == 0; value.ShowSeconds = seconds.IsChecked == true;
             value.FontSize = (int)(size.Value ?? 32); value.BackgroundOpacity = (int)opacity.Value;
@@ -159,4 +180,3 @@ internal sealed class SettingsWindow : Window
         DockPanel.SetDock(buttons, Dock.Bottom); root.Children.Insert(0, buttons);
     }
 }
-

@@ -14,7 +14,22 @@ internal static class Checks
         try
         {
             void Check(bool condition, string name) { if (!condition) throw new Exception(name); lines.Add("PASS: " + name); }
+            if (OperatingSystem.IsWindows()) WindowsStartup.Check(Check);
             var value = new Preferences();
+            var savedCulture = System.Globalization.CultureInfo.CurrentCulture;
+            try
+            {
+                var instant = DateTimeOffset.Parse("2026-01-15T23:30:00Z");
+                foreach (var locale in new[] { "da-DK", "en-US", "ja-JP" })
+                {
+                    var culture = new System.Globalization.CultureInfo(locale);
+                    System.Globalization.CultureInfo.CurrentCulture = culture;
+                    Check(new Preferences().Date(instant) == new DateTime(2026, 1, 16).ToString("d", culture), "Regional date and timezone midnight: " + locale);
+                    culture.DateTimeFormat.ShortDatePattern = "yyyy'/'MM'/'dd";
+                    Check(new Preferences().Date(instant) == "2026/01/16", "Custom regional date pattern: " + locale);
+                }
+            }
+            finally { System.Globalization.CultureInfo.CurrentCulture = savedCulture; }
             Check(value.Format(DateTimeOffset.Parse("2026-01-15T12:00:00Z")) == "13:00:00", "Copenhagen winter");
             Check(value.Format(DateTimeOffset.Parse("2026-07-15T12:00:00Z")) == "14:00:00", "Copenhagen summer");
             Check(value.Format(DateTimeOffset.Parse("2026-03-29T01:00:00Z")) == "03:00:00", "Spring DST transition");
@@ -91,4 +106,3 @@ internal static class Checks
         }
     }
 }
-

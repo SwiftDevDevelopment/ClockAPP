@@ -58,3 +58,9 @@ The native CI workflow can be run manually and checks contributions to this edit
 
 
 
+
+### Windows startup (next build)
+
+In Settings, enable **Start with Windows** and click Save. It is off by default and applies only to your Windows account. Disable it and save before removing the app. Keep the executable in its permanent folder; after moving it, open it there and save this setting again. Windows Task Manager can also disable startup apps. This option is unavailable on Linux and Mac.
+
+The next build also shows the date below the time at 65% of the clock font size. It follows the selected timezone and the system's short-date format, including regional customizations. Linux and Mac use the system locale through .NET; their display still needs native testing.
