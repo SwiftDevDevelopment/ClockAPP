@@ -1,0 +1,69 @@
+name: Build release downloads
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+            edition: stable
+            asset: SimpleClockOverlay-1.2.3-win-x64.zip
+          - os: windows-latest
+            rid: win-x64
+            edition: preview
+            asset: ClockOverlay-win-x64.zip
+          - os: ubuntu-latest
+            rid: linux-x64
+            edition: preview
+            asset: ClockOverlay-linux-x64.zip
+          - os: macos-15-intel
+            rid: osx-x64
+            edition: preview
+            asset: ClockOverlay-Mac-Intel.zip
+          - os: macos-latest
+            rid: osx-arm64
+            edition: preview
+            asset: ClockOverlay-Mac-Apple-Silicon.zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - name: Build and check
+        shell: pwsh
+        run: |
+          $project = if ('${{ matrix.edition }}' -eq 'stable') { 'windows/SimpleClockOverlay.csproj' } else { 'cross-platform/ClockOverlay.csproj' }
+          dotnet publish $project -c Release -r '${{ matrix.rid }}' -o publish
+          if ($LASTEXITCODE) { throw 'Publish failed' }
+          dotnet list $project package --vulnerable --include-transitive
+          if ($LASTEXITCODE) { throw 'Dependency check failed' }
+          $exe = if ('${{ matrix.edition }}' -eq 'stable') { './publish/SimpleClockOverlay.exe' } elseif ($IsWindows) { './publish/ClockOverlay.exe' } else { './publish/ClockOverlay' }
+          & $exe --self-test "$PWD/checks.txt"
+          if ($LASTEXITCODE) { Get-Content checks.txt; throw 'Checks failed' }
+          Get-Content checks.txt
+          if ('${{ matrix.edition }}' -eq 'stable') {
+            Copy-Item windows/Manual.txt publish/Manual.txt
+            Compress-Archive -Path publish/* -DestinationPath '${{ matrix.asset }}'
+          } else {
+            if ($IsLinux) { xvfb-run -a $exe --clock-check "$PWD/render.txt" } else { & $exe --clock-check "$PWD/render.txt" }
+            if ($LASTEXITCODE -or !(Select-String -Path render.txt -Pattern '^PASS:')) { throw 'Render check failed' }
+            & $exe --package '${{ matrix.rid }}' "$PWD/publish" "$PWD/${{ matrix.asset }}"
+            if ($LASTEXITCODE) { throw 'Packaging failed' }
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.edition }}-${{ matrix.rid }}
+          path: ${{ matrix.asset }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: checks-${{ matrix.edition }}-${{ matrix.rid }}
+          path: |
+            checks.txt
+            render.txt*

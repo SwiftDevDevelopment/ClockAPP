@@ -1,0 +1,12 @@
+Clock Overlay 1.2.3 - Windows
+
+Exit the old clock, extract this ZIP to a permanent folder, and launch SimpleClockOverlay.exe.
+The date below the time follows your selected clock timezone and Windows regional short-date format.
+It uses the same text color, at 65% of the time's font size.
+Right-click the clock for Settings or Exit. Existing settings are retained.
+Start with Windows is optional and disabled by default. Enable it in Settings and Save.
+After moving the executable, open it in the new folder and save the startup setting again.
+Disable startup before deleting the app.
+
+Updates check GitHub at most once every 48 hours while running, unless disabled in Settings. Only newer versions download. Click Update and restart to install. GitHub receives normal connection information including your IP address; clock settings are not uploaded. Privacy: https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement
+
