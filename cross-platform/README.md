@@ -59,7 +59,7 @@ The native CI workflow can be run manually and checks contributions to this edit
 
 
 
-### Windows startup (next build)
+### Windows startup and date (2.0.0-preview.3, not yet released)
 
 In Settings, enable **Start with Windows** and click Save. It is off by default and applies only to your Windows account. Disable it and save before removing the app. Keep the executable in its permanent folder; after moving it, open it there and save this setting again. Windows Task Manager can also disable startup apps. This option is unavailable on Linux and Mac.
 

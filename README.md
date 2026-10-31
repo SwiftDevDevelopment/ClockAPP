@@ -30,7 +30,7 @@ Download the ZIP for your computer, extract it, and open the app. No separate .N
 
 **Notes:** exclusive-fullscreen apps may cover the overlay. The application is unsigned, so Windows may show an unknown-publisher notice.
 
-## Upcoming changes
+## Upcoming changes — Windows 1.2.3 / Preview 2.0.0-preview.3
 
 The source now includes these changes for the next release:
 
