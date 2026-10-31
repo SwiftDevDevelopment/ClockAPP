@@ -58,9 +58,9 @@ internal sealed class UpdateService : IDisposable
         File.WriteAllText(path + ".tmp", JsonSerializer.Serialize(state));
         File.Move(path + ".tmp", path, true);
     }
-    internal async Task CheckAsync(bool enabled)
+    internal async Task CheckAsync(bool enabled, bool force = false)
     {
-        if (!enabled || checking || cancellation.IsCancellationRequested) return;
+        if ((!enabled && !force) || checking || cancellation.IsCancellationRequested) return;
         checking = true;
         FileStream? checkLock = null;
         string? partial = null;
@@ -72,7 +72,7 @@ internal sealed class UpdateService : IDisposable
             UpdateState state;
             try { state = ReadState(); } catch (JsonException) { state = new(); }
             var now = DateTimeOffset.UtcNow;
-            if (!IsDue(state.LastAttemptUtc, now)) return;
+            if (!force && !IsDue(state.LastAttemptUtc, now)) return;
             state.LastAttemptUtc = now;
             SaveState(state); // Persist before contacting GitHub, including failed attempts.
             var token = cancellation.Token;

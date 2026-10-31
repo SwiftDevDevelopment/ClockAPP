@@ -4,8 +4,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>2.0.0-preview.3</Version>
-    <InformationalVersion>2.0.0-preview.3</InformationalVersion>
+    <Version>2.0.0-preview.4</Version>
+    <InformationalVersion>2.0.0-preview.4</InformationalVersion>
     <AssemblyName>ClockOverlay</AssemblyName>
     <Product>Simple Clock Overlay Cross-platform Preview</Product>
     <PublishSingleFile>true</PublishSingleFile>
@@ -23,5 +23,3 @@
     <PackageReference Include="Avalonia.Themes.Simple" Version="12.1.4" />
   </ItemGroup>
 </Project>
-
-

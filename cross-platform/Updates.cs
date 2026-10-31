@@ -65,9 +65,9 @@ internal sealed class Updates : IDisposable
         if (!CanInstall) throw new IOException("No verified newer update is ready.");
         return Installer.Start(Download, Read().Hash!, folder);
     }
-    internal async Task Check(bool enabled)
+    internal async Task Check(bool enabled, bool force = false)
     {
-        if (!enabled || !Supported || busy || cancellation.IsCancellationRequested) return;
+        if ((!enabled && !force) || !Supported || busy || cancellation.IsCancellationRequested) return;
         busy = true;
         FileStream? mutex = null;
         var partial = Path.Combine(folder, "download.partial");
@@ -78,7 +78,7 @@ internal sealed class Updates : IDisposable
             UpdateState state;
             try { state = Read(); } catch (JsonException) { state = new(); }
             var now = DateTimeOffset.UtcNow;
-            if (!Due(state.LastCheck, now)) return;
+            if (!force && !Due(state.LastCheck, now)) return;
             state.LastCheck = now; Write(state);
             var token = cancellation.Token;
             using var manifestResponse = await client.GetAsync("https://raw.githubusercontent.com/SwiftDevDevelopment/ClockAPP/main/cross-platform/update.json?check=" + now.ToUnixTimeSeconds(), HttpCompletionOption.ResponseHeadersRead, token);

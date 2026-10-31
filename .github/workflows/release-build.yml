@@ -12,7 +12,7 @@ jobs:
           - os: windows-latest
             rid: win-x64
             edition: stable
-            asset: SimpleClockOverlay-1.2.3-win-x64.zip
+            asset: SimpleClockOverlay-1.2.4-win-x64.zip
           - os: windows-latest
             rid: win-x64
             edition: preview
@@ -54,6 +54,9 @@ jobs:
           if ($LASTEXITCODE) { Get-Content checks.txt; throw 'Checks failed' }
           Get-Content checks.txt
           if ('${{ matrix.edition }}' -eq 'stable') {
+            Invoke-Clock @('--update-tests', "$PWD/update-checks.txt")
+            if ($LASTEXITCODE) { Get-Content update-checks.txt; throw 'Updater checks failed' }
+            Get-Content update-checks.txt
             Copy-Item windows/Manual.txt publish/Manual.txt
             Compress-Archive -Path publish/* -DestinationPath '${{ matrix.asset }}'
           } else {
@@ -72,5 +75,5 @@ jobs:
           name: checks-${{ matrix.edition }}-${{ matrix.rid }}
           path: |
             checks.txt
+            update-checks.txt
             render.txt*
-

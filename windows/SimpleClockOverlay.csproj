@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <Version>1.2.3</Version>
+    <Version>1.2.4</Version>
     <Product>Simple Clock Overlay</Product>
     <Description>A minimal configurable Windows desktop clock overlay.</Description>
     <TargetFramework>net9.0-windows</TargetFramework>

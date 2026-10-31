@@ -3,7 +3,7 @@ namespace SimpleClockOverlay;
 public sealed class SettingsWindow : Form
 {
     public bool InstallUpdateRequested { get; private set; }
-    public SettingsWindow(Settings settings, string updateStatus = "", string? downloadFolder = null, bool canInstall = false)
+    public SettingsWindow(Settings settings, string updateStatus = "", string? downloadFolder = null, bool canInstall = false, Func<Task<(string Status, bool CanInstall)>>? checkUpdates = null)
     {
         Text = $"Clock Overlay {UpdateService.CurrentVersion} · Settings";
         FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -86,7 +86,21 @@ public sealed class SettingsWindow : Form
         layout.Controls.Add(noticePanel, 0, 11); layout.SetColumnSpan(noticePanel, 2);
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45));
         var updateDownloads = new Button { Text = canInstall ? "Update and restart" : updateStatus, Dock = DockStyle.Fill, Enabled = canInstall, ForeColor = Color.Black, BackColor = Color.White };
-        layout.Controls.Add(updateDownloads, 0, 12); layout.SetColumnSpan(updateDownloads, 2);
+        var forceCheck = new Button { Text = "Force update check", Dock = DockStyle.Fill, Enabled = checkUpdates is not null, ForeColor = Color.Black, BackColor = Color.White };
+        layout.Controls.Add(forceCheck, 0, 12); layout.Controls.Add(updateDownloads, 1, 12);
+        forceCheck.Click += async (_, _) =>
+        {
+            forceCheck.Enabled = false; updateDownloads.Enabled = false; forceCheck.Text = "Checking…";
+            try
+            {
+                var result = await checkUpdates!();
+                if (IsDisposed) return;
+                updateDownloads.Text = result.CanInstall ? "Update and restart" : result.Status;
+                updateDownloads.Enabled = result.CanInstall;
+            }
+            catch (Exception e) { if (!IsDisposed) updateDownloads.Text = "Check failed: " + e.Message; }
+            finally { if (!IsDisposed) { forceCheck.Text = "Force update check"; forceCheck.Enabled = true; } }
+        };
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 55));
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
         var hint = new Label { Text = "Drag the clock to move it. Right-click to exit.\n0% background leaves only the clock text visible.", AutoSize = true, ForeColor = Color.LightSteelBlue, Dock = DockStyle.Fill };

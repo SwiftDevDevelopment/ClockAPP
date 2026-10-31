@@ -103,7 +103,7 @@ public sealed class ClockWindow : Form
     }
     void OpenSettings()
     {
-        using var dialog = new SettingsWindow(settings, updates.Status, updates.DownloadFolder, updates.CanInstall);
+        using var dialog = new SettingsWindow(settings, updates.Status, updates.DownloadFolder, updates.CanInstall, async () => { await updates.CheckAsync(true, force: true); return (updates.Status, updates.CanInstall); });
         TopMost = false;
         DialogResult result;
         try
@@ -151,10 +151,10 @@ public sealed class ClockWindow : Form
         var now = DateTimeOffset.UtcNow;
         var text = ClockText.Format(now, settings);
         var date = ClockText.Date(now, settings);
-        using var dateFont = new Font("Segoe UI", settings.FontSize * 0.65f, FontStyle.Regular, GraphicsUnit.Point);
+        using var dateFont = new Font("Segoe UI", Math.Max(9f, settings.FontSize * 0.5f), FontStyle.Regular, GraphicsUnit.Point);
         var dateMeasured = TextRenderer.MeasureText(date, dateFont);
         var measured = TextRenderer.MeasureText(text, font);
-        Size = new Size(Math.Max(measured.Width, dateMeasured.Width) + 32, measured.Height + dateMeasured.Height + 22);
+        Size = new Size(Math.Max(measured.Width, dateMeasured.Width) + 24, measured.Height + dateMeasured.Height + 6);
         using var bitmap = new Bitmap(Width, Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
         using (var g = Graphics.FromImage(bitmap))
         {
@@ -167,8 +167,8 @@ public sealed class ClockWindow : Form
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
             using var format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
             using var textBrush = new SolidBrush(Color.FromArgb(settings.TextColorArgb));
-            g.DrawString(text, font, textBrush, new RectangleF(0, 8, Width, measured.Height), format);
-            g.DrawString(date, dateFont, textBrush, new RectangleF(0, 10 + measured.Height, Width, dateMeasured.Height), format);
+            g.DrawString(text, font, textBrush, new RectangleF(0, 2, Width, measured.Height), format);
+            g.DrawString(date, dateFont, textBrush, new RectangleF(0, 2 + measured.Height, Width, dateMeasured.Height), format);
         }
         var dc = Native.GetDC(IntPtr.Zero); var memory = Native.CreateCompatibleDC(dc); var hb = bitmap.GetHbitmap(Color.FromArgb(0)); var old = Native.SelectObject(memory, hb);
         try { var pos = new Native.Point(Left, Top); var size = new Native.Point(Width, Height); var source = new Native.Point(0, 0); var blend = new Native.Blend { Alpha = 255, Format = 1 }; Native.UpdateLayeredWindow(Handle, dc, ref pos, ref size, memory, ref source, 0, ref blend, 2); }

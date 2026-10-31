@@ -36,6 +36,13 @@ internal static class UpdateTests
                 Check(handler.Count == 2, "Repeated ticks do not repeat network requests");
             }
             using (var restarted = new UpdateService(new HttpClient(handler), root)) { restarted.CheckAsync(true).GetAwaiter().GetResult(); Check(handler.Count == 2, "48-hour schedule persists across restarts"); }
+            using (var forced = new UpdateService(new HttpClient(handler), root))
+            {
+                forced.CheckAsync(false, force: true).GetAwaiter().GetResult();
+                Check(handler.Count == 3 && forced.CanInstall, "Forced check bypasses timer and disabled automatic checks without downloading staged version again");
+                forced.CheckAsync(true).GetAwaiter().GetResult();
+                Check(handler.Count == 3, "Forced check resets the automatic 48-hour interval");
+            }
             var badRoot = Path.Combine(root, "bad");
             using (var bad = new UpdateService(new HttpClient(new FakeHandler(manifest with { Sha256 = new string('0', 64) }, payload)), badRoot))
             {
@@ -53,6 +60,7 @@ internal static class UpdateTests
             {
                 service.CheckAsync(true).GetAwaiter().GetResult(); Check(current.Count == 1, "Current version does not download binary");
                 Check(!service.CanInstall, "Current version does not enable installation");
+                service.CheckAsync(false, force: true).GetAwaiter().GetResult(); Check(current.Count == 2, "Forced current-version check downloads no binary");
             }
             var oldFile = Path.Combine(root, "installed.exe");
             var newFile = Path.Combine(root, "downloaded.exe");

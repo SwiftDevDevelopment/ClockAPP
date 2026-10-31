@@ -6,7 +6,7 @@ using Avalonia.Styling;
 namespace ClockOverlay;
 internal static class Program
 {
-    internal const string Version = "2.0.0-preview.3";
+    internal const string Version = "2.0.0-preview.4";
     [STAThread]
     public static int Main(string[] args)
     {
@@ -52,6 +52,3 @@ internal sealed class ClockApplication : Application
         base.OnFrameworkInitializationCompleted();
     }
 }
-
-
-

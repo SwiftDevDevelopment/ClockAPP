@@ -12,7 +12,7 @@ internal sealed class ClockWindow : Window
     readonly bool testing;
     readonly TextBlock text = new() { Foreground = Brushes.White, FontFamily = new FontFamily("Segoe UI, Noto Sans, DejaVu Sans, Helvetica Neue, sans-serif"), VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
     readonly TextBlock date = new() { HorizontalAlignment = HorizontalAlignment.Center };
-    readonly Border background = new() { CornerRadius = new CornerRadius(12), Padding = new Thickness(16, 8) };
+    readonly Border background = new() { CornerRadius = new CornerRadius(12), Padding = new Thickness(12, 4) };
     readonly DispatcherTimer timer = new() { Interval = TimeSpan.FromSeconds(1) };
     readonly Updates updates = new();
     readonly DispatcherTimer updateTimer = new() { Interval = TimeSpan.FromMinutes(1) };
@@ -27,7 +27,7 @@ internal sealed class ClockWindow : Window
         CanResize = false; ShowActivated = false; SizeToContent = SizeToContent.WidthAndHeight;
         Background = Brushes.Transparent;
         TransparencyLevelHint = new[] { WindowTransparencyLevel.Transparent };
-        var lines = new StackPanel { Spacing = 2 };
+        var lines = new StackPanel { Spacing = 0 };
         lines.Children.Add(text); lines.Children.Add(date);
         date.FontFamily = text.FontFamily;
         background.Child = lines; Content = background;
@@ -55,7 +55,7 @@ internal sealed class ClockWindow : Window
     {
         Topmost = preferences.AlwaysOnTop; text.FontSize = preferences.FontSize * 96d / 72;
         text.Foreground = new SolidColorBrush(Color.Parse(preferences.TextColor));
-        date.Foreground = text.Foreground; date.FontSize = text.FontSize * 0.65;
+        date.Foreground = text.Foreground; date.FontSize = Math.Max(12, text.FontSize * 0.5);
         background.Background = new SolidColorBrush(preferences.Background);
         lastText = ""; Tick();
     }
@@ -86,7 +86,7 @@ internal sealed class ClockWindow : Window
         settingsOpen = true; Topmost = false;
         try
         {
-            var dialog = new SettingsWindow(preferences.Copy(), updates.Status, updates.CanInstall);
+            var dialog = new SettingsWindow(preferences.Copy(), updates.Status, updates.CanInstall, async () => { await updates.Check(true, force: true); return (updates.Status, updates.CanInstall); });
             var accepted = await dialog.ShowDialog<bool>(this);
             if (!accepted) return;
             preferences = dialog.Value; Apply(); Save();
@@ -109,7 +109,7 @@ internal sealed class SettingsWindow : Window
 {
     internal Preferences Value { get; }
     internal bool InstallRequested { get; private set; }
-    internal SettingsWindow(Preferences value, string updateStatus, bool canInstall)
+    internal SettingsWindow(Preferences value, string updateStatus, bool canInstall, Func<Task<(string Status, bool CanInstall)>>? checkUpdates = null)
     {
         Value = value;
         Title = "Clock Overlay " + Program.Version + " · Settings";
@@ -151,7 +151,7 @@ internal sealed class SettingsWindow : Window
             releases.Click += async (_, _) => { if (Launcher is not null) await Launcher.LaunchUriAsync(new Uri(Updates.Repository + "/releases")); };
             stack.Children.Add(releases);
         }
-        stack.Children.Add(new TextBlock { Text = updateStatus, TextWrapping = TextWrapping.Wrap, FontSize = 12 });
+        var updateStatusText = new TextBlock { Text = updateStatus, TextWrapping = TextWrapping.Wrap, FontSize = 12 }; stack.Children.Add(updateStatusText);
         var platformNotice = OperatingSystem.IsLinux() ? "Experimental Linux support: intended for X11/XWayland. Positioning, transparency and Always on Top depend on your desktop/compositor; native Wayland is not supported by this preview. Additional code may be needed from the maintainer or community. Pull requests welcome." : OperatingSystem.IsMacOS() ? "Experimental macOS build: unsigned and not verified on a Mac. Spaces/fullscreen behavior and updating require testing. Pull requests welcome." : "Cross-platform preview: separate from the stable, lighter Windows Forms edition.";
         stack.Children.Add(new TextBlock { Text = platformNotice, TextWrapping = TextWrapping.Wrap, FontSize = 12 });
         var error = new TextBlock { Foreground = Brushes.OrangeRed, TextWrapping = TextWrapping.Wrap }; stack.Children.Add(error);
@@ -171,6 +171,18 @@ internal sealed class SettingsWindow : Window
             value.Normalize(); return true;
         }
         var update = new Button { Content = "Update and restart", IsEnabled = canInstall };
+        if (Updates.Supported)
+        {
+            var forceCheck = new Button { Content = "Force update check", IsEnabled = checkUpdates is not null };
+            forceCheck.Click += async (_, _) =>
+            {
+                forceCheck.IsEnabled = false; update.IsEnabled = false; forceCheck.Content = "Checking…";
+                try { var result = await checkUpdates!(); updateStatusText.Text = result.Status; update.IsEnabled = result.CanInstall; }
+                catch (Exception e) { updateStatusText.Text = "Check failed: " + e.Message; }
+                finally { forceCheck.Content = "Force update check"; forceCheck.IsEnabled = true; }
+            };
+            stack.Children.Add(forceCheck);
+        }
         update.Click += (_, _) => { if (SaveValue()) { InstallRequested = true; Close(true); } }; stack.Children.Add(update);
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 10 };
         var save = new Button { Content = "Save" }; save.Click += (_, _) => { if (SaveValue()) Close(true); };

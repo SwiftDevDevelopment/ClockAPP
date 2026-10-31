@@ -30,14 +30,15 @@ Download the ZIP for your computer, extract it, and open the app. No separate .N
 
 **Notes:** exclusive-fullscreen apps may cover the overlay. The application is unsigned, so Windows may show an unknown-publisher notice.
 
-## Latest changes — Windows 1.2.3 / Preview 2.0.0-preview.3
+## Next release — Windows 1.2.4 / Preview 2.0.0-preview.4
 
-Released 31 October 2026:
+Preparing 31 October 2026:
 
-- **Date below the time:** displayed at 65% of the clock text size, in the same color. The date follows the selected timezone and your system's regional short-date format, including custom formats.
+- **Date below the time:** displayed at half the clock text size (minimum 9 pt), in the same color, with tighter padding. The date follows the selected timezone and your system's regional short-date format, including custom formats.
+- **Force update check:** in Settings on Windows/Linux. Checks immediately, even if automatic checks are off, and restarts the 48-hour interval. Only newer versions download; an already verified staged download is reused. Click Update and restart to install. Mac updates remain manual.
 - **Start with Windows:** optional and disabled by default. Enable it in Settings and click Save. It applies only to your Windows account and needs no administrator access. Turn it off before removing the app; after moving the executable, open it from the new folder and save the setting again.
 
-Both features are implemented in the Windows Forms and cross-platform editions. Startup is Windows-only. The date uses the system locale on Linux and Mac. The downloads above include these changes.
+Both features are implemented in the Windows Forms and cross-platform editions. Startup is Windows-only. The date uses the system locale on Linux and Mac. The downloads above will be updated when the release checks finish.
 
 **Validation — 31 October 2026:** [Native release builds and checks passed](https://github.com/SwiftDevDevelopment/ClockAPP/actions/runs/41183149262) on Windows, Linux, Intel Mac and Apple Silicon Mac, including regional date formats and timezone midnight rollover. Preview clock renders passed on all four platforms, and Windows startup registration/removal checks passed. A real Windows sign-out/sign-in startup test is still pending. NuGet's online vulnerability check completed for both projects, including indirect dependencies, and reported no known vulnerable packages. This dependency check is separate from the dated antivirus scan below and is not a guarantee of complete safety.
 

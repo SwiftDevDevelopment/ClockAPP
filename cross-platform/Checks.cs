@@ -74,6 +74,20 @@ internal static class Checks
                 else Check(handler.Count == 0 && !updater.CanInstall, "macOS performs no automatic check, download or install");
             }
             using (var updater = new Updates(new HttpClient(handler), updateRoot)) { updater.Check(true).GetAwaiter().GetResult(); Check(handler.Count == (Updates.Supported ? 2 : 0), "Check timestamp survives restart"); }
+            using (var forced = new Updates(new HttpClient(handler), updateRoot))
+            {
+                forced.Check(false, force: true).GetAwaiter().GetResult();
+                Check(handler.Count == (Updates.Supported ? 3 : 0), "Force bypasses interval and disabled automatic checks without re-downloading staged version; Mac remains offline");
+                forced.Check(true).GetAwaiter().GetResult();
+                Check(handler.Count == (Updates.Supported ? 3 : 0), "Forced check resets the automatic 48-hour interval");
+            }
+            var currentHandler = new FakeHandler(release with { Version = Program.Version }, zipBytes);
+            using (var current = new Updates(new HttpClient(currentHandler), Path.Combine(root, "current")))
+            {
+                current.Check(false, force: true).GetAwaiter().GetResult();
+                current.Check(false, force: true).GetAwaiter().GetResult();
+                Check(currentHandler.Count == (Updates.Supported ? 2 : 0) && !current.CanInstall, "Forced current-version checks download no binary; Mac remains offline");
+            }
             var bad = new FakeHandler(release with { Files = new() { [Updates.Rid] = release.Files[Updates.Rid] with { Sha256 = new string('0',64) } } }, zipBytes);
             using (var updater = new Updates(new HttpClient(bad), Path.Combine(root, "bad"))) { updater.Check(true).GetAwaiter().GetResult(); Check(!updater.CanInstall, "Invalid archive checksum never enables installation"); }
             var offline = new FakeHandler(release, zipBytes) { Offline = true };
