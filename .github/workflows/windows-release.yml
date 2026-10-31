@@ -1,0 +1,40 @@
+name: Windows release checks
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - name: Build and test Windows release
+        shell: pwsh
+        run: |
+          dotnet publish windows/SimpleClockOverlay.csproj -c Release -r win-x64 -o publish
+          if ($LASTEXITCODE) { throw 'Build failed' }
+          dotnet list windows/SimpleClockOverlay.csproj package --vulnerable --include-transitive
+          if ($LASTEXITCODE) { throw 'Dependency check failed' }
+          foreach ($mode in @('self-test','update-tests','render-check')) {
+            $report = if ($mode -eq 'render-check') { "$PWD/render" } else { "$PWD/$mode.txt" }
+            $process = Start-Process ./publish/SimpleClockOverlay.exe -ArgumentList @("--$mode", ('"'+$report+'"')) -WindowStyle Hidden -Wait -PassThru
+            if ($process.ExitCode) { throw "Failed: $mode" }
+          }
+          Get-Content self-test.txt,update-tests.txt,render/render-checks.txt
+          Copy-Item windows/Manual.txt publish/Manual.txt
+          Compress-Archive -Path publish/* -DestinationPath SimpleClockOverlay-1.2.5-win-x64.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-stable-win-x64
+          path: SimpleClockOverlay-1.2.5-win-x64.zip
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: checks-stable-win-x64
+          path: |
+            self-test.txt
+            update-tests.txt
+            render/

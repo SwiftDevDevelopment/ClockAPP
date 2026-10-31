@@ -31,10 +31,11 @@ Download the ZIP for your computer, extract it, and open the app. No separate .N
 **Notes:** exclusive-fullscreen apps may cover the overlay. The application is unsigned, so Windows may show an unknown-publisher notice.
 
 <details>
-<summary>Latest changes and checks — Windows 1.2.4 / Preview 2.0.0-preview.4</summary>
+<summary>Latest changes and checks — Windows 1.2.5 / Preview 2.0.0-preview.4</summary>
 
 Released 31 October 2026:
 
+- **Sharper Windows text:** the overlay renders at the current monitor DPI, with pixel-aligned text and a slightly stronger date font. The compact font sizes are retained.
 - **Date below the time:** displayed at half the clock text size (minimum 9 pt), in the same color, with tighter padding. The date follows the selected timezone and your system's regional short-date format, including custom formats.
 - **Force update check:** in Settings on Windows/Linux. Checks immediately, even if automatic checks are off, and restarts the 48-hour interval. Only newer versions download; an already verified staged download is reused. Click Update and restart to install. Mac updates remain manual.
 - **Start with Windows:** optional and disabled by default. Enable it in Settings and click Save. It applies only to your Windows account and needs no administrator access. Turn it off before removing the app; after moving the executable, open it from the new folder and save the setting again.

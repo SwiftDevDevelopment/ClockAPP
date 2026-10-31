@@ -14,6 +14,7 @@ internal static class Program
         if (args.Length == 2 && args[0] == "--apply-update") { UpdateInstaller.Run(args[1]); return; }
         if (args.Length == 2 && args[0] == "--update-tests") { UpdateTests.Run(args[1]); return; }
         if (args.Length == 2 && args[0] == "--self-test") { SelfTests.Run(args[1]); return; }
+        if (args.Length == 2 && args[0] == "--render-check") { ClockBitmap.Check(args[1]); return; }
         Application.Run(new ClockWindow());
     }
 }
@@ -145,31 +146,14 @@ public sealed class ClockWindow : Form
     protected override void OnMouseDown(MouseEventArgs e) { base.OnMouseDown(e); if (e.Button == MouseButtons.Left) { dragging = true; dragStart = e.Location; Capture = true; } }
     protected override void OnMouseMove(MouseEventArgs e) { base.OnMouseMove(e); if (dragging) { Location = new Point(Left + e.X - dragStart.X, Top + e.Y - dragStart.Y); RenderClock(); } }
     protected override void OnMouseUp(MouseEventArgs e) { base.OnMouseUp(e); if (dragging) { dragging = false; Capture = false; SavePosition(); } if (e.Button == MouseButtons.Right) menu.Show(this, e.Location); }
+    protected override void OnDpiChanged(DpiChangedEventArgs e)
+    {
+        base.OnDpiChanged(e); RenderClock(); RestorePositionToScreen();
+    }
     public void RenderClock()
     {
-        using var font = new Font("Segoe UI", settings.FontSize, FontStyle.Regular, GraphicsUnit.Point);
-        var now = DateTimeOffset.UtcNow;
-        var text = ClockText.Format(now, settings);
-        var date = ClockText.Date(now, settings);
-        using var dateFont = new Font("Segoe UI", Math.Max(9f, settings.FontSize * 0.5f), FontStyle.Regular, GraphicsUnit.Point);
-        var dateMeasured = TextRenderer.MeasureText(date, dateFont);
-        var measured = TextRenderer.MeasureText(text, font);
-        Size = new Size(Math.Max(measured.Width, dateMeasured.Width) + 24, measured.Height + dateMeasured.Height + 6);
-        using var bitmap = new Bitmap(Width, Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-        using (var g = Graphics.FromImage(bitmap))
-        {
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            using var path = new GraphicsPath();
-            const int d = 24;
-            path.AddArc(0, 0, d, d, 180, 90); path.AddArc(Width-d-1, 0, d, d, 270, 90); path.AddArc(Width-d-1, Height-d-1, d, d, 0, 90); path.AddArc(0, Height-d-1, d, d, 90, 90); path.CloseFigure();
-            using var brush = new SolidBrush(Color.FromArgb(settings.BackgroundOpacity * 255 / 100, Color.FromArgb(settings.BackgroundColorArgb)));
-            g.FillPath(brush, path);
-            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-            using var format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-            using var textBrush = new SolidBrush(Color.FromArgb(settings.TextColorArgb));
-            g.DrawString(text, font, textBrush, new RectangleF(0, 2, Width, measured.Height), format);
-            g.DrawString(date, dateFont, textBrush, new RectangleF(0, 2 + measured.Height, Width, dateMeasured.Height), format);
-        }
+        using var bitmap = ClockBitmap.Render(settings, DateTimeOffset.UtcNow, DeviceDpi);
+        Size = bitmap.Size;
         var dc = Native.GetDC(IntPtr.Zero); var memory = Native.CreateCompatibleDC(dc); var hb = bitmap.GetHbitmap(Color.FromArgb(0)); var old = Native.SelectObject(memory, hb);
         try { var pos = new Native.Point(Left, Top); var size = new Native.Point(Width, Height); var source = new Native.Point(0, 0); var blend = new Native.Blend { Alpha = 255, Format = 1 }; Native.UpdateLayeredWindow(Handle, dc, ref pos, ref size, memory, ref source, 0, ref blend, 2); }
         finally { Native.SelectObject(memory, old); Native.DeleteObject(hb); Native.DeleteDC(memory); Native.ReleaseDC(IntPtr.Zero, dc); }

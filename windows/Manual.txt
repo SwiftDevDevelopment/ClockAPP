@@ -1,4 +1,4 @@
-Clock Overlay 1.2.4 - Windows
+Clock Overlay 1.2.5 - Windows
 
 Exit the old clock, extract this ZIP to a permanent folder, and launch SimpleClockOverlay.exe.
 The date below the time follows your selected clock timezone and Windows regional short-date format.
@@ -12,3 +12,5 @@ Updates check GitHub at most once every 48 hours while running, unless disabled 
 
 
 Force update check in Settings checks immediately, even if automatic checks are off. Only newer versions download; a verified staged download is reused. Click Update and restart to install. The next automatic check waits another 48 hours.
+
+Text renders at the monitor DPI, with a slightly stronger date font for readability. Moving between monitors with different scaling updates the bitmap resolution.
