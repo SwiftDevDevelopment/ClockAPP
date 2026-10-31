@@ -44,16 +44,22 @@ jobs:
           dotnet list $project package --vulnerable --include-transitive
           if ($LASTEXITCODE) { throw 'Dependency check failed' }
           $exe = if ('${{ matrix.edition }}' -eq 'stable') { './publish/SimpleClockOverlay.exe' } elseif ($IsWindows) { './publish/ClockOverlay.exe' } else { './publish/ClockOverlay' }
-          & $exe --self-test "$PWD/checks.txt"
+          function Invoke-Clock([string[]]$clockArgs) {
+            if ($IsWindows) {
+              $process = Start-Process -FilePath $exe -ArgumentList ($clockArgs | ForEach-Object { '"' + $_ + '"' }) -WindowStyle Hidden -Wait -PassThru
+              $global:LASTEXITCODE = $process.ExitCode
+            } else { & $exe @clockArgs }
+          }
+          Invoke-Clock @('--self-test', "$PWD/checks.txt")
           if ($LASTEXITCODE) { Get-Content checks.txt; throw 'Checks failed' }
           Get-Content checks.txt
           if ('${{ matrix.edition }}' -eq 'stable') {
             Copy-Item windows/Manual.txt publish/Manual.txt
             Compress-Archive -Path publish/* -DestinationPath '${{ matrix.asset }}'
           } else {
-            if ($IsLinux) { xvfb-run -a $exe --clock-check "$PWD/render.txt" } else { & $exe --clock-check "$PWD/render.txt" }
+            if ($IsLinux) { xvfb-run -a $exe --clock-check "$PWD/render.txt" } else { Invoke-Clock @('--clock-check', "$PWD/render.txt") }
             if ($LASTEXITCODE -or !(Select-String -Path render.txt -Pattern '^PASS:')) { throw 'Render check failed' }
-            & $exe --package '${{ matrix.rid }}' "$PWD/publish" "$PWD/${{ matrix.asset }}"
+            Invoke-Clock @('--package', '${{ matrix.rid }}', "$PWD/publish", "$PWD/${{ matrix.asset }}")
             if ($LASTEXITCODE) { throw 'Packaging failed' }
           }
       - uses: actions/upload-artifact@v4
@@ -67,3 +73,4 @@ jobs:
           path: |
             checks.txt
             render.txt*
+
