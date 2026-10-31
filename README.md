@@ -5,8 +5,8 @@ A floating digital clock for Windows, with an experimental Linux and Mac edition
 ## Downloads
 
 - [Windows — stable release](https://github.com/SwiftDevDevelopment/ClockAPP/releases/latest)
-- [Windows/Linux preview](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.2)
-- [Mac preview](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.2-mac.1)
+- [Windows/Linux preview](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.3)
+- [Mac preview](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.3)
 
 Download the ZIP for your computer, extract it, and open the app. No separate .NET installation is required. For Mac, choose **Apple Silicon** for M-series Macs or **Intel** for an Intel Mac.
 
@@ -26,20 +26,20 @@ Download the ZIP for your computer, extract it, and open the app. No separate .N
 
 **Settings location:** the stable Windows edition uses `%LOCALAPPDATA%\SimpleClockOverlay\settings.json`. Other platform locations are in the preview manual.
 
-**Removal:** exit the clock and delete its application folder. Optionally delete its settings folder too.
+**Removal:** disable Start with Windows in Settings first, then exit the clock and delete its application folder. Optionally delete its settings folder too.
 
 **Notes:** exclusive-fullscreen apps may cover the overlay. The application is unsigned, so Windows may show an unknown-publisher notice.
 
-## Upcoming changes — Windows 1.2.3 / Preview 2.0.0-preview.3
+## Latest changes — Windows 1.2.3 / Preview 2.0.0-preview.3
 
-The source now includes these changes for the next release:
+Released 31 October 2026:
 
 - **Date below the time:** displayed at 65% of the clock text size, in the same color. The date follows the selected timezone and your system's regional short-date format, including custom formats.
 - **Start with Windows:** optional and disabled by default. Enable it in Settings and click Save. It applies only to your Windows account and needs no administrator access. Turn it off before removing the app; after moving the executable, open it from the new folder and save the setting again.
 
-Both features are implemented in the Windows Forms and cross-platform editions. Startup is Windows-only. The date uses the system locale on Linux and Mac, but this new display still needs native testing there. Existing release downloads do not yet include these changes.
+Both features are implemented in the Windows Forms and cross-platform editions. Startup is Windows-only. The date uses the system locale on Linux and Mac. The downloads above include these changes.
 
-**Validation — 31 October 2026:** both Windows test suites passed, including regional date formats, custom patterns, timezone midnight rollover and startup registration/removal. A real Windows sign-out/sign-in startup test is still pending. NuGet's online vulnerability check completed for both projects, including indirect dependencies, and reported no known vulnerable packages. This dependency check is separate from the dated antivirus scan below and is not a guarantee of complete safety.
+**Validation — 31 October 2026:** [Native release builds and checks passed](https://github.com/SwiftDevDevelopment/ClockAPP/actions/runs/41183149262) on Windows, Linux, Intel Mac and Apple Silicon Mac, including regional date formats and timezone midnight rollover. Preview clock renders passed on all four platforms, and Windows startup registration/removal checks passed. A real Windows sign-out/sign-in startup test is still pending. NuGet's online vulnerability check completed for both projects, including indirect dependencies, and reported no known vulnerable packages. This dependency check is separate from the dated antivirus scan below and is not a guarantee of complete safety.
 
 ## Platform support
 
@@ -47,7 +47,7 @@ The stable edition supports Windows 10/11, 64-bit. The preview adds basic Linux 
 
 ## Malware scan
 
-**30 October 2026: Microsoft Defender detected no threats** in the repository, application source and release folders, including archives. The scanned current-release ZIPs match GitHub's published SHA-256 hashes. [Scan details and file hashes](docs/MALWARE-SCAN.md).
+**30 October 2026: Microsoft Defender detected no threats** in the repository, application source and release folders, including archives. The report identifies the exact files and hashes scanned on that date; it does not cover the newer 1.2.3 or preview.3 downloads. [Scan details and file hashes](docs/MALWARE-SCAN.md).
 
 A clean scan is not a guarantee of complete safety. Use at your own risk.
 

@@ -49,9 +49,9 @@ jobs:
         shell: bash
         run: |
           case "${{ matrix.rid }}" in
-            osx-arm64) asset="ClockOverlay-Mac-Apple-Silicon.zip"; tag="v2.0.0-preview.2-mac.1" ;;
-            osx-x64) asset="ClockOverlay-Mac-Intel.zip"; tag="v2.0.0-preview.2-mac.1" ;;
-            *) asset="ClockOverlay-${{ matrix.rid }}.zip"; tag="v2.0.0-preview.2" ;;
+            osx-arm64) asset="ClockOverlay-Mac-Apple-Silicon.zip"; tag="v2.0.0-preview.3" ;;
+            osx-x64) asset="ClockOverlay-Mac-Intel.zip"; tag="v2.0.0-preview.3" ;;
+            *) asset="ClockOverlay-${{ matrix.rid }}.zip"; tag="v2.0.0-preview.3" ;;
           esac
           curl --fail --location "https://github.com/SwiftDevDevelopment/ClockAPP/releases/download/$tag/$asset" --output published.zip
           unzip -q published.zip -d published
@@ -71,6 +71,7 @@ jobs:
             test-results.txt
             published-results.txt
             ui-results.txt*
+
 
 
 

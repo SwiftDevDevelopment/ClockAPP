@@ -1,10 +1,10 @@
 # Cross-platform preview
 
-This is the separate Avalonia edition of Simple Clock Overlay. It keeps the application small in scope: one clock, a right-click Settings/Exit menu, and local preferences. The original Windows Forms release remains unchanged.
+This is the separate Avalonia edition of Simple Clock Overlay. It keeps the application small in scope: one clock, a right-click Settings/Exit menu, and local preferences. The Windows Forms edition is maintained separately.
 
 ## Downloads and platform status
 
-Windows/Linux downloads: [v2.0.0-preview.2](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.2). Mac downloads: [corrected Mac package](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.2-mac.1). The original Mac ZIPs omitted native graphics libraries; use the corrected package.
+Windows, Linux and Mac downloads: [v2.0.0-preview.3](https://github.com/SwiftDevDevelopment/ClockAPP/releases/tag/v2.0.0-preview.3). Choose Apple Silicon for M-series Macs or Intel for Intel Macs.
 
 | Download | Status | Updates |
 | --- | --- | --- |
@@ -49,18 +49,8 @@ Windows passed 19 logic/update/packaging checks. Linux passed 20 native checks (
 
 The native CI workflow can be run manually and checks contributions to this edition. See CONTRIBUTING.md. Final native CI passed on all four targets, including execution of the actual published Unix ZIPs without chmod: [run 41052534607](https://github.com/SwiftDevDevelopment/ClockAPP/actions/runs/41052534607). This validates the preview.2 archive permission fix; it does not establish macOS desktop/Gatekeeper behavior or universal Linux compositor compatibility.
 
-
-
-
-
-
-
-
-
-
-
-### Windows startup and date (2.0.0-preview.3, not yet released)
+### Windows startup and date (2.0.0-preview.3)
 
 In Settings, enable **Start with Windows** and click Save. It is off by default and applies only to your Windows account. Disable it and save before removing the app. Keep the executable in its permanent folder; after moving it, open it there and save this setting again. Windows Task Manager can also disable startup apps. This option is unavailable on Linux and Mac.
 
-The next build also shows the date below the time at 65% of the clock font size. It follows the selected timezone and the system's short-date format, including regional customizations. Linux and Mac use the system locale through .NET; their display still needs native testing.
+The clock also shows the date below the time at 65% of the clock font size. It follows the selected timezone and the system's short-date format, including regional customizations. Linux and Mac use the system locale through .NET. Native logic and clock-render checks passed on all four preview platforms: [release build results](https://github.com/SwiftDevDevelopment/ClockAPP/actions/runs/41183149262). Hosted tests do not cover every desktop environment or Gatekeeper behavior.
